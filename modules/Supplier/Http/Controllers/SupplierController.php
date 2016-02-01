@@ -1,12 +1,15 @@
 <?php namespace Modules\Supplier\Http\Controllers;
 
+use Modules\Supplier\Repository\ServiceRepository;
+use Modules\Supplier\Repository\SupplierRepository;
 use Pingpong\Modules\Routing\Controller;
 
 class SupplierController extends Controller {
-	
-	public function index()
+
+	private $supplierRepository;
+
+	public function __construct(SupplierRepository $supplierRepository)
 	{
-		return view('supplier::index');
+		$this->supplierRepository = $supplierRepository;
 	}
-	
 }
