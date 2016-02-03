@@ -92,21 +92,6 @@
 			return $finalArray;
 		}
 
-		/**
-		 * @param $products
-		 * @param $supplierIds
-		 * @return array|bool
-		 */
-
-		public function findByProductBySuppliers( $products, $supplierIds ){
-
-			$query = $this->supplier->newQueryWithoutScopes();
-
-			$suppliersBuilder = $query->from('supplier_products')->whereIn('supplier_id',$supplierIds)->whereIn('product_id', $products)->select('supplier_id');
-
-			return $this->resolveIds($suppliersBuilder);
-		}
-
 		public function findByQueryString($query, $column = 'company_name'){
 
 			if( is_array($column ) ) {
@@ -117,58 +102,46 @@
 			return $suppliersBuilder->get();
 		}
 
+		public function findByCountry( $countryId, $supplierIds = null ){
+			
+			$query = $this->fresh()->from('suppliers');
 
-		public function findByColumn( $inputs, $supplierIds = array() ){
-
-			foreach($this->validSearchColumn() as $name){
-				if( isset( $inputs[ $name ] ) ){
-					$this->supplier->where( $name, '=' ,$inputs[ $name ] );
-					$this->validSearchByColumn = true;
-				}
+			if(!is_null( $supplierIds ) ){
+				$query->whereIn( 'id', $supplierIds);
 			}
 
-			if( $this->validSearchByColumn ) {
-				if( !empty( $supplierIds ) ){
-					$this->supplier->whereIn('id',$supplierIds);
-				}
-				return $this->resolveIds( $this->supplier ,"id");
+			$result = $query->where('country_id','=',$countryId)->get();
+
+			if(!$result->isEmpty()){
+				return $result->lists('id')->toArray();
 			}
-
-			return false;
-		}
-
-		public function validSearchColumn(){
-			return ['country_id'];
-		}
-
-		public function resolveIds($suppliersBuilder,$columnListing = "supplier_id"){
-			$suppliersCollection = $suppliersBuilder->get();
-			if( !$suppliersCollection->isEmpty() ){
-				$ids = $suppliersCollection->lists($columnListing)->toArray();
-				return array_unique($ids);
-			}
-
-			return false;
 		}
 
 		public function fresh(){
 			return $this->supplier->newQueryWithoutScopes();
 		}
 
-		public function searchByProducts( $products = array() ){
+		public function searchByProducts( $products = array(), $supplierIds = null ){
+
 
 			/**
 			 * Getting the empty query builder
 			 * @var [type]
 			 */
-			$query = $this->supplier->newQueryWithoutScopes();
+			$query = $this->fresh();
 
 			/**
 			 * Serching Suppliers
 			 * @var [type]
 			 */
-			$suppliers = $query->from('supplier_products')
-				->whereIn( 'product_id', $products)
+
+			$query->from('supplier_products');
+
+			if(!is_null($supplierIds) ){
+				$query->whereIn('supplier_id',$supplierIds);
+			}
+
+			$suppliers = $query->whereIn( 'product_id', $products)
 				->get();
 
 			if( !$suppliers->isEmpty() ){

@@ -61,4 +61,14 @@
 		{
 			return $this->model->where('class', '=', $name)->first();
 		}
+
+		public function getByService($service){
+			$service = $this->serviceGetter($service)->first();
+			if( $service ){
+				$suppliers = $service->suppliers;
+				if(!$suppliers->isEmpty()){
+					return $suppliers->lists('id')->toArray();
+				}
+			}
+		}
 	}

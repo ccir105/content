@@ -4,10 +4,12 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 {
 	Route::get('products/{service}','ServicesController@getProducts');
 
-	Route::get('suppliers/{serviceSlug}','ServicesController@getSuppliers');
+	Route::get('suppliers/{serviceSlug}','ServicesController@getService');
+
+//	Route::get('search','SearchController@searchVendors');
 
 	Route::get('/', function( ) {
-		return ["name" => "Narendra" ];
+		return ["name" => "Narendra"];
 	});
 
 	Route::get('{id}', function(){

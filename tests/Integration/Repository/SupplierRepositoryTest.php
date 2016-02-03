@@ -5,10 +5,11 @@
     use Modules\Supplier\Repository\ServiceRepository;
     use Faker\Factory;
     use Modules\Supplier\Country;
+    use Modules\Supplier\SearchStrategy as Search;
 
 	class SupplierRepositoryTest extends TestCase{
 
-        // use DatabaseTransactions;
+        use DatabaseTransactions;
 
         private $supplier;
 
@@ -141,27 +142,6 @@
             $this->assertFalse($supplier);
         }
 
-        function test_filter_suppliers_by_products_and_supplier_list(){
-
-            $this->addSupplier();
-
-            $supplierRepo = new SupplierRepository();
-
-            $suppliers = $supplierRepo->all()->lists('id')->toArray();
-
-            $serviceRepo = new ServiceRepository();
-
-            $service1 = $serviceRepo->getByClass('fuel');
-
-            $products = $service1->products->lists('id')->toArray();
-
-            $result = $supplierRepo->findByProductBySuppliers($products,$suppliers);
-
-            $this->assertGreaterThan( 0, count( array_intersect( $result, $suppliers ) ) );
-
-        }
-
-
         function test_finding_by_query_string_single_column(){
 
             //comapny name passing
@@ -176,21 +156,7 @@
             $this->assertEquals('Sishir Traders',$supplierList->first()->company_name );
         }
 
-        //failed but why need to test more
-//        function test_finding_by_query_string_multiple_column(){
-//
-//            $this->addSupplier("Sishir Traders");
-//
-//            $supplierRepo = new SupplierRepository();
-//
-//            $supplierList = $supplierRepo->findByQueryString("Sishir Traders", ['company_name']);
-//
-//            $this->assertEquals(1,$supplierList->count());
-//
-//            $this->assertEquals('Sishir Traders',$supplierList->first()->company_name );
-//        }
-
-        function test_search_supplier_by_product(){
+        function test_search_supplier_by_product() {
 
             $this->addSupplier();
 
@@ -208,16 +174,65 @@
 
         }
 
-        function test_search_by_column(){
+        function test_search_by_country(){
 
-            $supplier = $this->addSupplier(['country_id'=> '1' ]);
+            $supplier = $this->addSupplier( ['country_id'=> '1' ] );
 
             $supplierRepo = new SupplierRepository();
 
-            $result = $supplierRepo->findByColumn(['country_id'=>'1']);
+            $result = $supplierRepo->findByCountry('1');
 
             $this->assertEquals(1, count($result));
 
             $this->assertEquals($supplier->id,$result[0]);
+        }
+
+        function test_advance_searching_by_service_products_country(){
+
+            $serviceRepo = new ServiceRepository();
+
+            $service1 = $serviceRepo->getByClass('fuel');
+
+            $products1 = $service1->products->lists('id')->toArray();
+            
+            $service2 = $serviceRepo->getByClass('tank');
+            
+            $products2 = $service2->products->lists('id')->toArray();
+            
+            $supplier1 = $this->addSupplier( ['company_name'=>'Hari Traders', 'country_id'=> '1', 'products' => $products1 ] );
+
+            $supplier2 = $this->addSupplier( ['company_name'=>'Sita Traders', 'country_id'=> '1', 'products' => $products1 ] );
+
+            $supplier3 = $this->addSupplier( ['company_name'=>'Ram Traders', 'country_id'=> '1', 'products' => $products2 ] );
+
+           $searchBuilder = new Search\SearchBuilder( ['service'=> $service2->id ] );
+
+           $searchBuilder->add(new Search\ByService);
+
+           $ids = $searchBuilder->getResults();
+
+           $this->assertEquals(1,count($ids));
+
+           $this->assertEquals($supplier3->id, $ids[0]);
+
+           $searchBuilder = new Search\SearchBuilder( ['service'=> $service1->slug, 'products' => [ $products1 ] ] );
+
+           $searchBuilder->add(new Search\ByService);
+
+           $searchBuilder->add(new Search\ByProducts());
+
+           $ids = $searchBuilder->getResults();
+
+           $this->assertEquals(2, count($ids));
+
+            $searchBuilder = new Search\SearchBuilder( ['service'=> $service1->slug, 'products' =>  $products1  ,'country_id'=> 1 ] );
+
+            $searchBuilder->add(new Search\ByService());
+
+            $searchBuilder->add(new Search\ByProducts());
+
+            $searchBuilder->add(new Search\ByCountry());
+
+            $this->assertEquals(2, count($searchBuilder->getResults()));
         }
 	}
