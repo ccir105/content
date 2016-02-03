@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -30,13 +33,17 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/home';
 
+    private $jwt;
+
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(JWTAuth $jwt)
     {
+        $this->jwt = $jwt;
+        
         $this->middleware('guest', ['except' => 'logout']);
     }
 
@@ -68,5 +75,30 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function postLogin(Request $request){
+
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        $user = User::whereEmail($request->get())->first();
+        
+        if( $user ) {
+            $userData = [
+                'user_id' => $user->id,
+                'email' => $user->email
+            ];
+            try{
+                $token = $this->jwt->attempt($credentials, $userData);
+                return response()->json(compact('token'));
+            }
+            catch( JWTException $expection ){
+                return response()->json(['error'=>1],400);
+            }
+        }
     }
 }
