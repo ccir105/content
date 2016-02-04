@@ -1,11 +1,13 @@
 <?php namespace Modules\Supplier\SearchStrategy;
 
+use Modules\Supplier\Supplier;
+
 class SearchBuilder{
     public $strategy = [];
 
     private $request;
 
-    private $suppliersIds;
+    private $suppliersIds = null;
 
     public function __construct($request = array())
     {
@@ -17,16 +19,20 @@ class SearchBuilder{
     }
 
     public function getResults(){
-        \DB::enableQueryLog();
+
         foreach ($this->strategy as $strategy) {
 
             $result =  $strategy->search( $this->request , $this->suppliersIds);
 
-            if( $result ){
-                $this->suppliersIds = $result;
+            if($result == false){
+
+                $this->suppliersIds = false;
+                break;
             }
+
+            $this->suppliersIds = $result;
         }
-       // print_r(\DB::getQueryLog());
-        return $this->suppliersIds;
+
+        return ($this->suppliersIds) ? Supplier::whereIn('id',$this->suppliersIds)->with('profile')->paginate(5) : ['empty'];
     }
 }

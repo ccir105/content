@@ -31,6 +31,14 @@
 			return $this->serviceGetter($service)->with( 'suppliers', 'suppliers.profile' )->paginate(10);
 		}
 
+		public function getWithAllProducts(){
+			return $this->model->with('products')->get();
+		}
+
+		public function getAll(){
+			return $this->model->all();
+		}
+
 		/**
 		 * @param $service
 		 * @return mixed

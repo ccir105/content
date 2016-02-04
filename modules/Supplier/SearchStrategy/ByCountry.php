@@ -12,10 +12,14 @@ class ByCountry extends SearchStrategyContract {
 
     public function search( $request, $supplierIds = array() )
     {
-        $countryId = $request['country_id'];
+        $countryId = $this->getData($request);
 
         $suppliers = $this->repo->findByCountry($countryId , $supplierIds );
 
         return $suppliers;
+    }
+
+    public function dataKey(){
+        return "country_id";
     }
 }

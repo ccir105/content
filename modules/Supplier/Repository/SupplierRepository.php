@@ -52,11 +52,11 @@
 				$profile->save();
 			}
 
-			if( isset( $inputs['products'] ) ) {
+			if( isset($inputs['products'] ) ) {
 				$this->saveService($supplier, $inputs['products']);
 			}
 
-			return $supplier->load('profile');
+			return $supplier;
 
 		}
 

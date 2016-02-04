@@ -1,6 +1,7 @@
 <?php namespace Modules\Supplier\Http\Controllers;
 
 use Modules\Supplier\Repository\ServiceRepository;
+use Modules\Supplier\Service;
 use Pingpong\Modules\Routing\Controller;
 
 class ServicesController extends Controller {
@@ -29,4 +30,11 @@ class ServicesController extends Controller {
         return $this->serviceRepository->suppliersByService($serviceSlug);
     }
 
+    public function allWithProducts(){
+        return $this->serviceRepository->getWithAllProducts();
+    }
+
+    public function all(){
+        return $this->serviceRepository->getAll();
+    }
 }

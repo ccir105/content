@@ -12,10 +12,16 @@ class ByProducts extends SearchStrategyContract {
 
     public function search( $request, $supplierIds = array() )
     {
-        $products = $request['products'];
 
-        $suppliers = $this->repo->searchByProducts($products, $supplierIds );
+        $products = $this->getData($request);
 
+        $suppliers = $this->repo->searchByProducts( $products, $supplierIds );
+        // print_r(\DB::getQueryLog());
         return $suppliers;
+    }
+
+    public function dataKey()
+    {
+        return "products";
     }
 }

@@ -12,8 +12,13 @@ class ByService extends SearchStrategyContract {
 
     public function search( $request, $vendorIds = array() )
     {
-        $service = $request['service'];
+        $service = $this->getData($request);
 
         return $this->repo->getByService($service);
+    }
+
+    public function dataKey()
+    {
+       return "service";
     }
 }
