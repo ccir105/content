@@ -1,14 +1,14 @@
 <?php namespace Modules\Supplier\Http\Controllers;
 
-use Illuminate\Support\Facades\Config;
 use Modules\Supplier\Http\Requests\SupplierImageUpload;
 use Modules\Supplier\Http\Requests\SupplierRequest;
-use Modules\Supplier\Repository\ServiceRepository;
 use Modules\Supplier\Repository\SupplierRepository;
+use Modules\Supplier\Supplier;
 use Pingpong\Modules\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class SupplierController extends Controller {
 
@@ -39,25 +39,21 @@ class SupplierController extends Controller {
 	}
 
 	public function putSupplier(SupplierRequest $request, $supplier){
+
 		return $this->supplierRepository->store($request->all(), $supplier->id);
 	}
 
 	public function uploadProfile(SupplierImageUpload $request){
 
 		$file = $request->file('image');
-
-		$extension = $file->getClientOriginalExtension();
-
-		Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+		return $this->resizeImage( $file );
 	}
 
 	public function resizeImage($file) {
 
-		$types = array('.','-thumbnail.', '-resiged.');
+		$types = array('.','-thumbnail.', '-resized.');
 
 		$sizes = array( array('60', '60'), array('200', '200') );
-
-		$fname = $file->getClientOriginalName();
 
 		$ext = $file->getClientOriginalExtension();
 
@@ -67,6 +63,22 @@ class SupplierController extends Controller {
 
 		Storage::disk( 'local' )->put( $original, File::get( $file ) );
 
-//		foreach()
+		foreach ($types as $key => $type) {
+
+			$newName = $nameWithOutExt . $type . $ext;
+
+			$targetPath = Supplier::getUploadPath($newName);
+
+			Storage::copy($original, $newName);
+
+			Image::make($targetPath)
+				->resize($sizes[$key][0], $sizes[$key][1],function($constraint)
+				{
+					$constraint->aspectRatio();
+				})
+				->save($targetPath);
+		}
+
+		return url(Supplier::getUploadPath($nameWithOutExt . '.' .$ext,true));//
 	}
 }

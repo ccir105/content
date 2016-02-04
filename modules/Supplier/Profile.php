@@ -10,5 +10,5 @@ class Profile extends Model{
 
 	public $timestamps = false;
 
-	protected $fillable = ['company_name','website','email','phone','road','address','zip_code','description'];
+	protected $fillable = ['company_name','website','email','phone','road','address','zip_code','description','profile_image'];
 }

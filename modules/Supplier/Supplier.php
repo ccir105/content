@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model {
 	protected $table = "suppliers";
 
+	protected $uploadPath = "";
+
 	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code', 'country_id', 'profile', ];
 
 	public function profile(){
@@ -17,5 +19,9 @@ class Supplier extends Model {
 
 	public function products(){
 		return $this->belongsToMany('Modules\Supplier\Product','supplier_products','supplier_id','product_id');
+	}
+
+	public static function getUploadPath($name = "",$onlyPath = null){
+		return ($onlyPath) ? "uploads/" . $name : public_path('uploads/' . $name);
 	}
 }

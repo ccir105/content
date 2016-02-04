@@ -7,7 +7,6 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 	Route::get('suppliers/{serviceSlug}','ServicesController@getService');
 
 	Route::post('auth/login','AuthController@postLogin');
-
 //	Route::get('search','SearchController@searchVendors');
 
 });
@@ -17,6 +16,8 @@ Route::group(['middleware' => ['web','api.request','jwt.auth'], 'namespace' => '
 	Route::post('supplier/{supplier}','SupplierController@putSupplier');
 	Route::delete('supplier/{supplier}','SupplierController@delete');
 	Route::get('supplier/search','SupplierController@searchSupplier');
+	Route::post('image/upload','SupplierController@uploadProfile');
+
 });
 
 Route::bind('supplier',function($supplier) {
@@ -31,3 +32,4 @@ Route::bind('supplier',function($supplier) {
 Route::get('test',function(){
 	return Modules\Supplier\Product::withSomething(['1','2']);
 });
+
