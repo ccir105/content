@@ -62,6 +62,13 @@ class ServiceSeeder extends Seeder
         ];
 
         Country::create($country);
+        
+        $user = new App\User;
+        $user->firstOrcreate([
+            'name' => 'Test User',
+            'email' => 'admin@test.com',
+            'password' => Hash::make('test')
+        ]);
 
 		// for($i = 0;$i<=3;$i++){
 

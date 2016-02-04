@@ -7,7 +7,7 @@ class Supplier extends Model {
 
 	protected $uploadPath = "";
 
-	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code', 'country_id', 'profile', ];
+	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code', 'country_id', ];
 
 	public function profile(){
 		return $this->hasOne('Modules\Supplier\Profile','supplier_id','id');

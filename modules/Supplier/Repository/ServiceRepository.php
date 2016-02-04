@@ -36,7 +36,7 @@
 		 * @return mixed
 		 */
 		public function getProducts($serviceClass){
-			if($service = $this->getByClass( $serviceClass ) ){
+			if( $service = $this->getByClass( $serviceClass ) ){
 				return $service->products;
 			}
 			return [];

@@ -79,6 +79,6 @@ class SupplierController extends Controller {
 				->save($targetPath);
 		}
 
-		return url(Supplier::getUploadPath($nameWithOutExt . '.' .$ext,true));//
+		return ['short_name'=>$nameWithOutExt . '.' .$ext,'url'=>url(Supplier::getUploadPath($nameWithOutExt . '.' .$ext,true))];//
 	}
 }
