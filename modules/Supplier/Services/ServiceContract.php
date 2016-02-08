@@ -34,7 +34,21 @@ abstract class ServiceContract{
 			$this->specificValidation(),
 			[
 				'suppliers_id' => 'required|array|exists:suppliers,id',
-				'products' => 'required|array|service_products'
+				'products' => 'required|array|service_products',
+
+				/*Deleviry addrees*/
+
+				'street' => 'required',
+				'postal_code' => 'required',
+				'city' => 'required',
+				'country' =>'required',
+
+				/*Contact Details*/
+
+				'email_address' => 'required|email',
+				'first_name' => 'required',
+				'last_name' => 'required',
+
 			]
 		);
 	}

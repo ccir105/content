@@ -92,12 +92,18 @@ class AuthController extends Controller
                 'name' => $user->name
             ];
             try{
-                $token = $this->jwt->attempt($credentials, $userData);
-                return response()->json(compact('token'));
+                $token = $this->jwt->attempt( $credentials, $userData );
+                
+                if( $token  ){
+                    return response()->json(compact('token'));
+                }
             }
+
             catch( JWTException $exception ){
                 return response()->json(['error'=>1],400);
             }
+        
+            return response()->json( ['error'=>1 ],401);
         }
     }
 }

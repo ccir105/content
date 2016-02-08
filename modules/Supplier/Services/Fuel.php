@@ -12,6 +12,8 @@ class Fuel extends ServiceContract {
 	 */
 	function specificValidation()
 	{
-		return [];
+		return [
+			'liters' => 'required|numeric'
+		];
 	}
 }

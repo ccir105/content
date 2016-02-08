@@ -97,7 +97,7 @@ class AuthController extends Controller
                 return response()->json(compact('token'));
             }
             catch( JWTException $expection ){
-                return response()->json(['error'=>1],400);
+                return response()->json( [ 'error' => 1 ],400);
             }
         }
     }
