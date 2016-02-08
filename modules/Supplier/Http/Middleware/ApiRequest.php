@@ -4,6 +4,8 @@ use Closure;
 
 class ApiRequest {
 
+    const VALIDATION_ERROR = 422;
+
     /**
      * Handle an incoming request.
      *
@@ -13,6 +15,17 @@ class ApiRequest {
      */
     public function handle($request, Closure $next)
     {
-    	return $next($request);
+        $response =  $next($request);
+        
+        $statusCode = $response->getStatusCode();
+
+        if( $statusCode == $this::VALIDATION_ERROR ){
+            $responseData['message'] = $response->getData();
+            $responseData['error'] = 'validation_error';
+            $responseData['status'] = false;
+            return response()->json($responseData,$statusCode);
+        }
+        
+        return $response;
     }
 }

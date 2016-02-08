@@ -1,8 +1,16 @@
 <?php namespace Modules\Supplier\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Supplier\Services\ServiceFactory;
 
-class SupplierImageUpload extends FormRequest {
+class SupplierContactRequest extends FormRequest {
+
+	private $service;
+
+	public function __construct(){
+		parent::__construct();
+		$this->service = ServiceFactory::getService();
+	}
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -21,9 +29,7 @@ class SupplierImageUpload extends FormRequest {
 	 */
 	public function rules()
 	{
-		return [
-			'image' => 'required|image|mimes:jpeg,png'
-		];
+		return $this->service->buildValidation();
 	}
 
 }

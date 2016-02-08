@@ -1,5 +1,6 @@
 <?php namespace Modules\Supplier\Http\Controllers;
 
+use Modules\Supplier\Http\Requests\SupplierContactRequest;
 use Modules\Supplier\Repository\ServiceRepository;
 use Modules\Supplier\Service;
 use Pingpong\Modules\Routing\Controller;
@@ -36,5 +37,9 @@ class ServicesController extends Controller {
 
     public function all(){
         return $this->serviceRepository->getAll();
+    }
+
+    public function contact(SupplierContactRequest $request){
+        return $request->all();
     }
 }

@@ -14,7 +14,7 @@ class SearchBuilder{
         $this->request = $request;
     }
 
-    public function add($strategy){
+    public function add(SearchStrategyContract $strategy){
         $this->strategy[] = $strategy;
     }
 

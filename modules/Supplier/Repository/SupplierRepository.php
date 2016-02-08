@@ -1,10 +1,13 @@
 <?php namespace Modules\Supplier\Repository;
 	use Modules\Supplier\Supplier;
 	use Modules\Supplier\Product;
-
+	use Modules\Supplier\Helpers\ImageUpload as ImageHelper;
+	
 	class SupplierRepository {
 		
 		public $supplier;
+
+		const PAGINATION = 5;
 
 		private $validSearchByColumn = false; //just a flag
 
@@ -38,6 +41,20 @@
 
 			unset($inputs['profile']);
 
+			if( isset($profileData['profile_image'] ) ){
+
+				$filePath = $this->supplier->getUploadPath( $profileData['profile_image'] );
+
+				if( !file_exists( $filePath ) ){
+
+					unset( $profileData['profile_image'] );
+
+				} else{
+
+					$profileData['profile_image'] = ImageHelper::renameImage($inputs['company_name'], $profileData['profile_image']);
+				}
+			}
+
 			$supplier->fill( $inputs );
 
 			$supplier->save();
@@ -56,7 +73,7 @@
 				$this->saveService($supplier, $inputs['products']);
 			}
 
-			return $supplier;
+			return $supplier->load('profile');
 
 		}
 
@@ -93,13 +110,13 @@
 		}
 
 		public function findByQueryString($query, $column = 'company_name'){
-
+			\DB::enableQueryLog();
 			if( is_array($column ) ) {
 				$suppliersBuilder = $this->supplier->whereRaw("MATCH(" . implode(',', $column) . ") AGAINST ('$query' IN NATURAL LANGUAGE MODE)"); //multi match quwery
 			}else{
 				$suppliersBuilder = $this->supplier->where($column,'LIKE',"$query%");
 			}
-			return $suppliersBuilder->get();
+			return $suppliersBuilder->paginate(self::PAGINATION);
 		}
 
 		public function findByCountry( $countryId, $supplierIds = null ){
@@ -159,4 +176,12 @@
 			return false;
 		}
 
+		public function delete($supplier){
+			return $supplier->delete();
+		}
+
+		public function searchByQuery($query){
+			$data = $this->findByQueryString($query);
+			return $data;
+		}
 	}

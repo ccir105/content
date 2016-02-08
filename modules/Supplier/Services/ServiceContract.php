@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Modules\Supplier\Service;
-use Modules\Repository\SupplierRepository;
+use Validator;
 
-abstract class ServiceContract  {
+abstract class ServiceContract{
 
 	protected  $service;
 
@@ -12,10 +12,31 @@ abstract class ServiceContract  {
 
 	protected $repository;
 
-	public function __construct(Service $service, Request $request,SupplierRepository $repository){
+	public function __construct(Service $service){
 		$this->service = $service;
-		$this->request = $request;
-		$this->repository = $repository;
+	}
+
+	public function buildValidation(){
+
+		Validator::extend('service_products',function($attribute ,$value, $parameter){
+		
+			if(!is_array($value)) return false;
+		
+			$ids = $this->service->products->lists('id')->toArray();
+		
+			$validProducts = array_intersect($value,$ids);
+		
+			return count($validProducts) !== 0;
+		
+		},'The products are not valid');
+
+		return array_merge(
+			$this->specificValidation(),
+			[
+				'suppliers_id' => 'required|array|exists:suppliers,id',
+				'products' => 'required|array|service_products'
+			]
+		);
 	}
 
 	/**
@@ -23,7 +44,7 @@ abstract class ServiceContract  {
 	 * @return [type] [description]
 	 */
 	
-	abstract function collectFormData();
+	abstract function specificValidation();
 
 	/**
 	 * Getting The Email View

@@ -5,9 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model {
 	protected $table = "suppliers";
 
-	protected $uploadPath = "";
+	protected $uploadPath = "uploads/";
 
 	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code', 'country_id', ];
+
+	protected $appends = ['image'];
 
 	public function profile(){
 		return $this->hasOne('Modules\Supplier\Profile','supplier_id','id');
@@ -22,6 +24,15 @@ class Supplier extends Model {
 	}
 
 	public static function getUploadPath($name = "",$onlyPath = null){
-		return ($onlyPath) ? "uploads/" . $name : public_path('uploads/' . $name);
+		return ( $onlyPath ) ? "uploads/" . $name : public_path('uploads/' . $name);
+	}
+
+	public function getImageAttribute(){
+		if( !isset( $this->profile ) ){
+			$this->load('profile');
+		}
+		 
+		$imagePath = empty($this->profile->profile_image) ? "default.png" : $this->profile->profile_image;
+		return url( $this->getUploadPath( $imagePath , true) );
 	}
 }
