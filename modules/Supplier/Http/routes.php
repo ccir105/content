@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web','api.request','jwt.auth'], 'namespace' => '
 	Route::delete('supplier/{supplier}','SupplierController@delete');
 	Route::get('supplier/search','SupplierController@searchByQuery');
 	Route::post('image/upload','SupplierController@uploadProfile');
-	Route::get('supplires','SupplierController@getAll');
+	Route::get('supplier','SupplierController@getAll');
 });
 
 Route::bind('supplier',function($supplier) {
