@@ -33,6 +33,6 @@ class Supplier extends Model {
 		}
 		 
 		$imagePath = empty($this->profile->profile_image) ? "default.png" : $this->profile->profile_image;
-		return url( $this->getUploadPath( $imagePath , true) );
+		return asset( $this->getUploadPath( $imagePath , true) );
 	}
 }

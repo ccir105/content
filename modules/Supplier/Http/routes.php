@@ -14,17 +14,11 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 
 	Route::get('search','SearchController@initSearch');
 
-	Route::get('supplires/search','SupplierController@searchByQuery');
-
 	Route::get('supplier/{supplier}','SupplierController@getSupplier');
 
 	Route::post('service/contact/{service}','ServicesController@contact');
 
 	Route::get('country','ServicesController@getCountries');
-
-	Route::get('contact/email',function(){
-		return view('email');
-	});
 });
 
 

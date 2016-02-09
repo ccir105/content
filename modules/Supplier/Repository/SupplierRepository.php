@@ -44,13 +44,10 @@
 			if( isset($profileData['profile_image'] ) ){
 
 				$filePath = $this->supplier->getUploadPath( $profileData['profile_image'] );
-
+				echo $filePath;
 				if( !file_exists( $filePath ) ){
-
 					unset( $profileData['profile_image'] );
-
 				} else{
-
 					$profileData['profile_image'] = ImageHelper::renameImage($inputs['company_name'], $profileData['profile_image']);
 				}
 			}
