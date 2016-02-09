@@ -81,9 +81,9 @@ class AuthController extends Controller
             'email' => 'required|email', 'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only( 'email', 'password' );
 
-        $user = User::whereEmail($request->get('email'))->first();
+        $user = User::whereEmail( $request->get('email') )->first();
         
         if( $user ) {
             $userData = [

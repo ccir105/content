@@ -55,15 +55,16 @@ class ServiceSeeder extends Seeder
 
 		$faker = Factory::create();
 
-        $country = [
-            'name' => 'Nepal',
-            'name' => 'China',
-            'name' => 'Bhutan'
-        ];
+        // $country = [
+        //     ['name' => 'Nepal'],
+        //     ['name' => 'China'],
+        //     ['name' => 'Bhutan']
+        // ];
 
-        Country::create($country);
+        // Country::create($country);
         
         $user = new App\User;
+
         $user->firstOrcreate([
             'name' => 'Test User',
             'email' => 'admin@test.com',

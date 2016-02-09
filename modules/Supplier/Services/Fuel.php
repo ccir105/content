@@ -2,8 +2,14 @@
 
 class Fuel extends ServiceContract {
 
-	public function getEmailView(){
+	public function getEmailView($request){
 		
+		$viewData = [
+			'liters' => 'Menge in Liter/Kg',
+			'delivery_month' => 'Liefermonat'
+		];
+
+		return $viewData;
 	}
 
 	/**
@@ -13,7 +19,8 @@ class Fuel extends ServiceContract {
 	function specificValidation()
 	{
 		return [
-			'liters' => 'required|numeric'
+			'liters' => 'required|numeric',
+			'delivery_month' => 'required',
 		];
 	}
 }

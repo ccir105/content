@@ -16,7 +16,7 @@ class ByProducts extends SearchStrategyContract {
         $products = $this->getData($request);
 
         $suppliers = $this->repo->searchByProducts( $products, $supplierIds );
-        // print_r(\DB::getQueryLog());
+       
         return $suppliers;
     }
 

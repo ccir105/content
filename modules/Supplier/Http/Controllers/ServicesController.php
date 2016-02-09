@@ -4,6 +4,7 @@ use Modules\Supplier\Http\Requests\SupplierContactRequest;
 use Modules\Supplier\Repository\ServiceRepository;
 use Modules\Supplier\Service;
 use Pingpong\Modules\Routing\Controller;
+use Modules\Supplier\Country;
 
 class ServicesController extends Controller {
 
@@ -27,19 +28,23 @@ class ServicesController extends Controller {
      * @param $serviceSlug
      * @return mixed
      */
-    public function getSuppliers($serviceSlug){
-        return $this->serviceRepository->suppliersByService($serviceSlug);
+    public function getSuppliers($serviceSlug) {
+        return $this->serviceRepository->suppliersByService( $serviceSlug );
     }
 
-    public function allWithProducts(){
-        return $this->serviceRepository->getWithAllProducts();
+    public function allWithProducts() {
+        return $this->serviceRepository->getWithAllProducts( );
     }
 
-    public function all(){
-        return $this->serviceRepository->getAll();
+    public function all() {
+        return $this->serviceRepository->getAll( );
     }
 
-    public function contact(SupplierContactRequest $request){
+    public function contact( SupplierContactRequest $request ){
         return $request->all();
+    }
+
+    public function getCountries(){
+        return Country::all();
     }
 }

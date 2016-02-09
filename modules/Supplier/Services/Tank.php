@@ -3,7 +3,15 @@
 class Tank extends ServiceContract {
 	
 	public function getEmailView() {
-
+		
+		return [
+			'storage_capacity' =>'Lagerkapazität in Liter/Kg',
+			'stock_liters'=>'Lagerbestand in Liter/Kg',
+			'tank'=>'Tank',
+			'water_protection'=>'Gewässerschutzzone',
+			'last_revision'=>'Letzte Revision',
+		];
+		
 	}
 
 	/**

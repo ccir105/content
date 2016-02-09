@@ -1,12 +1,13 @@
 <?php namespace Modules\Supplier\Services {
 
 	class Heater extends ServiceContract {
-		public function collectFormData(){
 
-		}
-
-		public function getEmailView(){
-
+		public function getEmailView($request){
+			$viewData = [
+				'inquiry' => 'Anfrage',
+				'room_heat' => 'Raumheizvermögen',
+				'heating_kw' => 'Heizleistung kW (optional)'
+			];
 		}
 
 		/**
@@ -15,7 +16,9 @@
 		 */
 		function specificValidation()
 		{
-			return [];
+			return [
+
+			];
 		}
 	}
 }
