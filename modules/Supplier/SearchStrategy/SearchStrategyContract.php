@@ -7,7 +7,7 @@ abstract class SearchStrategyContract {
     abstract public function search( $request, $vendorIds = array() );
 
     public function isValid($request){
-        return isset( $request[ $this->dataKey() ] ) ? true : false;
+        return ( isset( $request[ $this->dataKey() ] ) && $request[ $this->dataKey ]!= "" ) ? true : false;
     }
 
     public function getData($request){

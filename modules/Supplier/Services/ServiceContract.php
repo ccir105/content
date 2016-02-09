@@ -83,15 +83,13 @@ abstract class ServiceContract{
 
 		$emailData = $this->makeEmailData();
 
-		return view('email')->with('contactData',$emailData);
-//
-//		foreach ($suppliers as $supplier) {
-//
-//			Mail::send( 'email', $emailData , function( $m ) use( $supplier, $fromEmail,$fromName ){
-//				$m->from( $fromEmail, $fromName );
-//				$m->to( $supplier->email, $supplier->first_name );
-//			});
-//		}
+		foreach ($suppliers as $supplier) {
+
+			Mail::send( 'email' , $emailData , function( $m ) use( $supplier, $fromEmail,$fromName ){
+				$m->from( $fromEmail, $fromName );
+				$m->to( $supplier->email, $supplier->first_name );
+			});
+		}
 	}
 
 	public function makeEmailData(){
