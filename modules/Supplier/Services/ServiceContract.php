@@ -5,6 +5,7 @@ use Modules\Supplier\Service;
 use Modules\Supplier\Product;
 use Modules\Supplier\Supplier;
 use Validator;
+use Mail;
 
 abstract class ServiceContract{
 
@@ -85,9 +86,9 @@ abstract class ServiceContract{
 
 		foreach ($suppliers as $supplier) {
 
-			Mail::send( 'email' , $emailData , function( $m ) use( $supplier, $fromEmail,$fromName ){
+			Mail::send( 'email' , ['contactData' => $emailData ] , function( $m ) use( $supplier, $fromEmail,$fromName ){
 				$m->from( $fromEmail, $fromName );
-				$m->to( $supplier->email, $supplier->first_name );
+				$m->to( $supplier->email_address, "" )->subject('Contact');
 			});
 		}
 	}
