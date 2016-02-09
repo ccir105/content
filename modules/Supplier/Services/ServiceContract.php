@@ -31,6 +31,7 @@ abstract class ServiceContract{
 		},'The products are not valid');
 
 		return array_merge(
+
 			$this->specificValidation(),
 			[
 				'suppliers_id' => 'required|array|exists:suppliers,id',
