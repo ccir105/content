@@ -2,7 +2,7 @@
 
 class Fuel extends ServiceContract {
 
-	public function getEmailView(){
+	public function emailDataFormat(){
 		
 		$viewData = [
 			'liters' => 'Menge in Liter/Kg',

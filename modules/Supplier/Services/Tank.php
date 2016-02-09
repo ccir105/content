@@ -2,7 +2,7 @@
 
 class Tank extends ServiceContract {
 	
-	public function getEmailView() {
+	public function emailDataFormat() {
 		
 		return [
 			'storage_capacity' =>'Lagerkapazität in Liter/Kg',

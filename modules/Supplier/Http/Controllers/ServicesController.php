@@ -40,8 +40,9 @@ class ServicesController extends Controller {
         return $this->serviceRepository->getAll( );
     }
 
-    public function contact( SupplierContactRequest $request ){
-        return $request->all();
+    public function contact( SupplierContactRequest $request,$service ){
+        $service->setRequest($request);
+        return $service->sendEmail();
     }
 
     public function getCountries(){

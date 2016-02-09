@@ -2,7 +2,7 @@
 
 	class Heater extends ServiceContract {
 
-		public function getEmailView(){
+		public function emailDataFormat(){
 			$viewData = [
 				'inquiry' => 'Anfrage',
 				'room_heat' => 'Raumheizvermögen',

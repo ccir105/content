@@ -14,6 +14,8 @@ class ByProducts extends SearchStrategyContract {
     {
 
         $products = $this->getData($request);
+        if(!is_array($products))
+            $products = [$products];
 
         $suppliers = $this->repo->searchByProducts( $products, $supplierIds );
        
