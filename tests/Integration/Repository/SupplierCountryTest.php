@@ -10,10 +10,16 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Supplier\Repository\ServiceRepository;
 use Modules\Supplier\Repository\SupplierRepository;
 use Faker\Factory;
+use Modules\Supplier\SearchStrategy\ByCountry;
+use Modules\Supplier\SearchStrategy\ByProducts;
+use Modules\Supplier\SearchStrategy\ByService;
 
+/**
+ * @property array searchStrategys
+ */
 class SupplierCountryTest extends TestCase
 {
-//    use DatabaseTransactions;
+    use DatabaseTransactions;
 
     function add_supplier_contry($inputs = []){
 
@@ -135,6 +141,144 @@ class SupplierCountryTest extends TestCase
         $countries = array_values(array_unique($countries->lists('pivot.country_id')->toArray()));
 
         $this->assertEquals($countries, ['2']);
+    }
+
+    public function test_search_country(){
+
+
+        $serviceRepo = new ServiceRepository();
+
+        $supplier1 = $this->add_supplier_contry([
+            'products' => [ 1, 2 ]
+        ]);
+
+//        echo 'SUp1--- '. $supplier1->id . PHP_EOL;
+
+        $supplier2 = $this->add_supplier_contry([
+            'products' => [ 6, 9, 11 ]
+        ]);
+
+        $supplier3 = $this->add_supplier_contry([
+            'products' => [ 5 , 9 ]
+        ]);
+
+        $builder = new \Modules\Supplier\SearchStrategy\SearchBuilder([
+            'service' => 3,
+            'products' => [ 11 ]
+        ]);
+
+        $result = $this->initSearch( $builder );
+
+        $this->assertEquals( [ $supplier2->id ], $result );
+
+        $builder = new \Modules\Supplier\SearchStrategy\SearchBuilder([
+            'service' => 1,
+            'products' => [ 3 ]
+        ]);
+
+        $result = $this->initSearch( $builder );
+
+        $this->assertFalse($result);
+    }
+
+    public function test_country_zip_code(  ) {
+
+        $supplier1 = $this->add_supplier_contry([
+            'products' => [ 1, 2 , 5, 9, 11 ,14 ],
+            'country'=> array(
+                [
+                    'id' => 1,
+                    'zip' => array(
+                         [
+                            'zip_from' => '100',
+                            'zip_to' => '500'
+                         ],
+                         [
+                            'zip_from' => '2000',
+                            'zip_to' => '4000'
+                         ]
+                    )
+                ],
+                [
+                    'id' => 2,
+                    'zip' => array(
+                        [
+                            'zip_from' => '1000',
+                            'zip_to' => '5000'
+                        ],
+                        [
+                            'zip_from' => '8000',
+                            'zip_to' => '9000'
+                        ]
+                    )
+                ]
+            )]);
+
+
+        $supplier2 = $this->add_supplier_contry([
+            'products' => [ 1 , 5, 9, 11 ,14 ],
+            'country'=> array([
+                'id' => 2,
+                'zip' => array(
+                    [
+                        'zip_from' => '4000',
+                        'zip_to' => '9000'
+                    ],
+                    [
+                        'zip_from' => '8500',
+                        'zip_to' => '12000'
+                    ]
+                )
+            ])
+        ]);
+
+        $supplier3 = $this->add_supplier_contry([
+                'products' => [ 1, 2 , 5 ,14 ],
+                'country'=> array(
+                    [
+                        'id' => 1,
+                        'zip' => array(
+                            [
+                                'zip_from' => '400',
+                                'zip_to' => '900'
+                            ],
+                            [
+                                'zip_from' => '3800',
+                                'zip_to' => '9000'
+                            ]
+                        )
+                    ]
+                )
+         ]);
+
+        $builder = new \Modules\Supplier\SearchStrategy\SearchBuilder([
+            'service' => 1,
+            'products' => [ 1 ],
+            'country_id' => 1,
+            'zip_code' => '454'
+        ]);
+
+        $result = $this->initSearch( $builder );
+
+        $this->assertEquals([$supplier1->id, $supplier3->id],$result);
+    }
+
+    public function initSearch($builder){
+
+        $searchStrategys = array(
+            new ByService(),
+            new ByProducts(),
+            new ByCountry()
+        );
+
+        foreach($searchStrategys as $strategy){
+
+            if($strategy->isValid( $builder->getRequest() ) ){
+                $builder->add( $strategy );
+            }
+        }
+
+        return $builder->getResults(true);
     }
 
 }

@@ -14,9 +14,24 @@ class ByCountry extends SearchStrategyContract {
     {
         $countryId = $this->getData($request);
 
-        $suppliers = $this->repo->findByCountry($countryId , $supplierIds );
+        $zipCode = null;
+
+        if( isset( $request[ 'zip_code' ] ) ){
+            $zipCode = $request['zip_code'];
+        }
+
+        $suppliers = $this->repo->findByCountry($countryId , $supplierIds ,$zipCode);
 
         return $suppliers;
+    }
+
+    public function isValid($request)
+    {
+        if( isset( $request['country_id'] ) || isset( $request['zip_code'] ) ){
+            return true;
+        }
+
+        return false;
     }
 
     public function dataKey(){

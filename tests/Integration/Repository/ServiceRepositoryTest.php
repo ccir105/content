@@ -18,7 +18,9 @@
 
 			foreach($allService as $key => $service){
 				$aService = $allService->get($key)->toArray();
+
 				$this->assertArrayHasKey('products',$aService);
+
 				$this->assertGreaterThan(0, $aService['products']);
 			}
 		}

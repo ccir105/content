@@ -18,7 +18,7 @@ class SearchBuilder{
         $this->strategy[] = $strategy;
     }
 
-    public function getResults(){
+    public function getResults($return = null){
 
         foreach ($this->strategy as $strategy) {
 
@@ -33,6 +33,11 @@ class SearchBuilder{
             $this->suppliersIds = $result;
         }
 
+        if($return) return $this->suppliersIds;
         return ($this->suppliersIds) ? Supplier::whereIn('id',$this->suppliersIds)->with('profile')->paginate(5) : ['empty'];
+    }
+
+    public function getRequest(){
+        return $this->request;
     }
 }

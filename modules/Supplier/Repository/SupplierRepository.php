@@ -124,18 +124,22 @@
 			return $suppliersBuilder->paginate(self::PAGINATION);
 		}
 
-		public function findByCountry( $countryId, $supplierIds = null ){
+		public function findByCountry( $countryId, $supplierIds = null ,$zipCode = null){
 			
-			$query = $this->fresh()->from('suppliers');
+			$query = $this->fresh()->from('supplier_country');
 
 			if(!is_null( $supplierIds ) ){
-				$query->whereIn( 'id', $supplierIds);
+				$query->whereIn( 'supplier_id', $supplierIds);
 			}
 
-			$result = $query->where('country_id','=',$countryId)->get();
+			if(!is_null($zipCode)){
+				$query->whereRaw('? between zip_from and zip_to',[$zipCode]);
+			}
 
-			if(!$result->isEmpty()){
-				return $result->lists('id')->toArray();
+			$result = $query->get();
+
+			if(!$result->isEmpty() ){
+				return $result->lists('supplier_id')->toArray();
 			}
 		}
 
@@ -195,9 +199,6 @@
 			$countryArr = [];
 
 			foreach($countries as $country){
-
-				$insArr = $country['zip'];
-
 				foreach($country['zip'] as $zip) {
 					$insArr = array_merge($zip, ['supplier_id'=>$supplier->id,'country_id' => $country['id']]);
 					$countryArr[] = with(new SupplierCountry($insArr))->save();
