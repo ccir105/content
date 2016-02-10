@@ -7,7 +7,7 @@
     use Modules\Supplier\Country;
     use Modules\Supplier\SearchStrategy as Search;
 
-	class SupplierRepositoryTest extends TestCase{
+	class SupplierRepositoryTest {
 
         use DatabaseTransactions;
 

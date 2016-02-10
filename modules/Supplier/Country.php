@@ -8,4 +8,7 @@ class Country extends Model {
 
     protected $fillable = ['name'];
 
+    public function supplier(){
+        return $this->belongsToMany('Modules\Supplier\Supplier','supplier_country','country_id','supplier_id');
+    }
 }

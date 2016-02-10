@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Supplier\Product;
+use Modules\Supplier\Country;
 
 class SupplierRequest extends FormRequest {
 
@@ -27,12 +28,17 @@ class SupplierRequest extends FormRequest {
 			return Product::withIds($value)->count() == count($value);
 		}, 'The Products are not valid');
 
+//		\Validator::extend('check_country',function($attribute,$value,$parameter){
+//			return
+//		});
+
 		return [
 			'company_name' => 'required',
 			'email_address' => 'required|email',
 			'profile' => 'required|array',
 			'profile.email' => 'required|email',
-			'products' => 'required|array|check_product'
+			'products' => 'required|array|check_product',
+			'country'=>'required|array|check_country'
 		];
 	}
 

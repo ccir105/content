@@ -7,7 +7,7 @@ class Supplier extends Model {
 
 	protected $uploadPath = "uploads/";
 
-	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code', 'country_id', ];
+	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code'];
 
 	protected $appends = ['image'];
 
@@ -34,5 +34,9 @@ class Supplier extends Model {
 		 
 		$imagePath = empty($this->profile->profile_image) ? "default.png" : $this->profile->profile_image;
 		return asset( $this->getUploadPath( $imagePath , true) );
+	}
+
+	public function country(){
+		return $this->belongsToMany('Modules\Supplier\Country','supplier_country','supplier_id','country_id')->withPivot(['zip_from','zip_to']);
 	}
 }

@@ -2,7 +2,7 @@
 	use Illuminate\Foundation\Testing\DatabaseTransactions;
 	use Modules\Supplier\Repository\ServiceRepository;
 
-	class ServiceRepositoryTest extends TestCase {
+	class ServiceRepositoryTest {
 
 		use DatabaseTransactions;
 

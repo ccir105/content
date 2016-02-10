@@ -770,7 +770,7 @@
 
 																		</tr>
 																		<tr>
-																			<td colspan="2"><p style="color:#3b3b3a;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed</p></td>
+																			<td colspan="2"><p style="color:#3b3b3a;">{{$contactData['description']}}</p></td>
 																		</tr>
 																	</table>
 																</td>

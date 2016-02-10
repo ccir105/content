@@ -95,20 +95,8 @@ abstract class ServiceContract{
 
 	public function makeEmailData(){
 
-		$serviceDataKey = $this->emailDataFormat();
-
-		$productData = [];
 		$contactData = [];
-
-		foreach( $serviceDataKey as $key => $name ){
-			if( $this->request->has($key) ){
-				$productData[$name] = $this->request->get($key);
-			}
-		}
-
-		$contactData['product'] = $productData;
-
-		$contactData['product']['Produkt'] = Product::find($this->request->get('product'))->name;
+		$serviceDataKey = $this->emailDataFormat();
 
 		$userDetailsData = array(
 			'email_address' => 'envelop',
@@ -123,6 +111,19 @@ abstract class ServiceContract{
 			'city'=> 'Ort'
 		];
 
+		$productData = [];
+
+		$contactData['description'] = ($request->has('description')) ? $request->get('description') : '';
+
+		$contactData['product']['Produkt'] = Product::find($this->request->get('product'))->name;
+
+		foreach( $serviceDataKey as $key => $name ){
+			if( $this->request->has($key) ){
+				$productData[$name] = $this->request->get($key);
+			}
+		}
+
+		$contactData['product'] = $productData;
 
 
 		foreach( $userDetailsData as $key => $icon ){

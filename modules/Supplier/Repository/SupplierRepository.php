@@ -1,4 +1,5 @@
 <?php namespace Modules\Supplier\Repository;
+	use Modules\Supplier\Entities\SupplierCountry;
 	use Modules\Supplier\Supplier;
 	use Modules\Supplier\Product;
 	use Modules\Supplier\Helpers\ImageUpload as ImageHelper;
@@ -44,7 +45,7 @@
 			if( isset($profileData['profile_image'] ) ){
 
 				$filePath = $this->supplier->getUploadPath( $profileData['profile_image'] );
-				echo $filePath;
+
 				if( !file_exists( $filePath ) ){
 					unset( $profileData['profile_image'] );
 				} else{
@@ -66,12 +67,19 @@
 				$profile->save();
 			}
 
-			if( isset($inputs['products'] ) ) {
+			if( isset( $inputs['products'] ) ) {
 				$this->saveService($supplier, $inputs['products']);
 			}
 
-			return $supplier->load('profile');
+			if( isset( $inputs['country'] ) ){
+				if(is_null($id) ){
+					$this->saveCountry($inputs['country'],$supplier);
+				}else{
+					$this->editCountry($inputs['country'],$supplier);
+				}
+			}
 
+			return $supplier->load('profile');
 		}
 
 		/**
@@ -99,15 +107,15 @@
 			$products = Product::whereIn('id',$products)->select('service_id','id')->get();
 			$finalArray = [];
 
-			$products->each(function($product)use (&$finalArray) {
-				$finalArray[$product->id] = ['service_id'=> $product->service_id ];
+			$products->each(function($product)use ( &$finalArray ) {
+				$finalArray[ $product->id ] = ['service_id'=> $product->service_id ];
 			});
 
 			return $finalArray;
 		}
 
 		public function findByQueryString($query, $column = 'company_name'){
-			\DB::enableQueryLog();
+
 			if( is_array($column ) ) {
 				$suppliersBuilder = $this->supplier->whereRaw("MATCH(" . implode(',', $column) . ") AGAINST ('$query' IN NATURAL LANGUAGE MODE)"); //multi match quwery
 			}else{
@@ -180,5 +188,27 @@
 		public function searchByQuery($query){
 			$data = $this->findByQueryString($query);
 			return $data;
+		}
+
+		public function saveCountry( $countries, $supplier ){
+
+			$countryArr = [];
+
+			foreach($countries as $country){
+
+				$insArr = $country['zip'];
+
+				foreach($country['zip'] as $zip) {
+					$insArr = array_merge($zip, ['supplier_id'=>$supplier->id,'country_id' => $country['id']]);
+					$countryArr[] = with(new SupplierCountry($insArr))->save();
+				}
+			}
+
+			return true;
+		}
+
+		public function editCountry($countries, $supplier){
+			SupplierCountry::where('supplier_id','=',$supplier->id)->delete();
+			return $this->saveCountry($countries, $supplier);
 		}
 	}
