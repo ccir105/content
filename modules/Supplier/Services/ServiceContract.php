@@ -25,9 +25,12 @@ abstract class ServiceContract{
 
 	public function buildValidation(){
 
+		\DB::enableQueryLog();
+		
 		Validator::extend('service_products',function($attribute ,$value, $parameter){
 			return !is_null( Product::find($value) );
 		},'The products are not valid');
+
 
 		return array_merge(
 
@@ -113,9 +116,8 @@ abstract class ServiceContract{
 
 		$productData = [];
 
-		$contactData['description'] = ($request->has('description')) ? $request->get('description') : '';
+		$contactData['description'] = ( $this->request->has('description') ) ? $this->request->get('description') : '';
 
-		$contactData['product']['Produkt'] = Product::find($this->request->get('product'))->name;
 
 		foreach( $serviceDataKey as $key => $name ){
 			if( $this->request->has($key) ){
@@ -124,6 +126,8 @@ abstract class ServiceContract{
 		}
 
 		$contactData['product'] = $productData;
+		
+		$contactData['product']['Produkt'] = Product::find( $this->request->get('product') )->name;
 
 
 		foreach( $userDetailsData as $key => $icon ){

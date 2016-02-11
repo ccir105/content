@@ -19,7 +19,7 @@ use Modules\Supplier\SearchStrategy\ByService;
  */
 class SupplierCountryTest extends TestCase
 {
-    use DatabaseTransactions;
+    // use DatabaseTransactions;
 
     function add_supplier_contry($inputs = []){
 

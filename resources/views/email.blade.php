@@ -8,7 +8,7 @@
 			padding: 0;
 		}
 		body {
-			background-image: url('{{ asset('email/background.jpg') }}');
+			background-image: url('http://www.swiss-magic-kunden.ch/html/click2energy/email/background.jpg');
 			background-repeat: repeat-y no-repeat;
 			background-color: #e1e1e1;
 			width: 100%!important;
@@ -631,8 +631,8 @@
 		table.facebook td{background:#3b5998;border-color:#2d4473;}table.facebook:hover td{background:#2d4473!important;}table.twitter td{background:#00acee;border-color:#0087bb;}table.twitter:hover td{background:#0087bb!important;}table.google-plus td{background-color:#DB4A39;border-color:#CC0000;}table.google-plus:hover td{background:#CC0000!important;}.template-label{color:#999999;font-size:11px;}.callout .panel{background:#ECF8FF;border-color:#b9e5ff;}.header{}.footer .wrapper{background:#ebebeb;}.footer h5{padding-bottom:10px;}table.columns .text-pad{padding-left:10px;padding-right:10px;}table.columns .left-text-pad{padding-left:10px;}table.columns .right-text-pad{padding-right:10px;}@media only screen and (max-width: 600px) {table[class="body"] .right-text-pad{padding-left:10px!important;}table[class="body"] .left-text-pad{padding-right:10px!important;}}
 	</style>
 </head>
-<body  bgcolor="#e1e1e1">
-	<table class="body">
+<body  bgcolor="#e1e1e1" style="background-image:url('http://www.swiss-magic-kunden.ch/html/click2energy/email/background.jpg'); background-color:#e1e1e1;">
+	<table class="body" width="580" align="center">
 		<tr>
 			<td class="center" align="center" valign="top">
 				<center>
@@ -640,17 +640,9 @@
 						<tr>
 							<td class="center" align="center">
 								<center>
-									<table class="container transparent">
+									<table class="container transparent" width="580" align="center">
 										<tr>
-											<td class="wrapper last">
-												<table class="twelve columns">
-													<tr>
-														<td class="six sub-columns"></td>
-														<td class="six sub-columns last" align="right" style="text-align:right; vertical-align:middle;"><span class="template-label">If you cannot read this email, please <a href="#">click here</a></span></td>
-														<td class="expander"></td>
-													</tr>
-												</table>
-											</td>
+											<td class="six sub-columns last" style="text-align:right; vertical-align:middle;"><p class="template-label" style="color: #999999;font-size: 11px; width:100%; text-align:right;">If you cannot read this email, please <a href="#" style="color:#14b2b6; font-size: 11px;">click here</a></p></td>
 										</tr>
 									</table>
 								</center>
@@ -658,174 +650,166 @@
 						</tr>
 					</table>
 					<br>
-					<table class="container">
+					<table class="container" width="580" align="center" bgcolor="#fff">
 						<tr>
 							<td>
-								<table class="row">
+								<table class="row" width="580" align="center">
 									<tr>
-										<td bgcolor="#ffffff" class="wrapper last"><table class="twelve columns">
-											<tr>
-												<td colspan="2" height="25">&nbsp;</td>
-											</tr>
-											<tr>
-												<td><h5>Glückwunsch!</h5></td>
-												<td><img src="{{ asset('email/logo.jpg') }}" width="193" height="40" alt="logo" style="float:right;"/></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-							<table class="row callout">
-								<tr>
-									<td class="wrapper last">
-										<table class="twelve columns">
-											<tr>
-												<td class=""><img src="{{ asset('email/banner.jpg') }}"  alt="banner" /></td>
-												<td class="expander"></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-							<table class="row">
-								<tr>
-									<td class="wrapper last">
-										<table class="twelve columns">
-											<tr>
-												<td><h6>Sie haben eine neue Kontaktanfrage!</h6>
-													<p>Bitte nehmen Sie Kontakt mit dem Kunden auf. Alle Informationen entnehmen Sie aus dieser E-Mail. Damit es zwischen Ihnen und dem Kunden zu einer Geschäftsabwicklung kommt, raten wir Ihnen diesen so schnell wie möglich zu kontaktieren. Auf Click2ENERGY hat der Kunde nämlich die Möglichkeit mehreren Lieferanten gleichzeitig eine Kontaktanfrage zu senden. Seien Sie also der Erste und erhöhen so die Chancen einer erfolgreichen Geschäftsabwicklung.</p></td>
-													<td class="expander"></td>
+										<td bgcolor="#ffffff" class="wrapper last">
+											<table class="twelve columns" width="580" align="center">
+												<tr>
+													<td colspan="2" height="25">&nbsp;</td>
+												</tr>
+												<tr>
+													<td><h5 style="font-size: 24px; color: #14b2b6; margin-top:0; margin-bottom: 0;">Glückwunsch!</h5></td>
+													<td style="text-align:right;" align="right"><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/logo.jpg" width="193" height="40" alt="logo" style="float:right;"/></td>
 												</tr>
 											</table>
 										</td>
 									</tr>
 								</table>
-								<table class="row">
-									<tr>
-										<td class="wrapper last offset-by-two">
-											<table class="seven columns">
-												<tr>
-													<td class="center" align="center" style="border:1px solid #14b2b6; padding-left:20px; padding-right:20px;">
-														<center>
-															<table class="">
-																<!-- <tr>
-																<td colspan="2" style=""><h6>Produktinformationen</h6></td>
-															</tr> -->
-															<tr>
-																<td>
-																	<table class="center" style="margin-top:-10px;">
-																		<tr>
-																			<td><h6 style="float:left; padding-left:10px; padding-right:10px; background:#fff; margin-left:-10px;">Produktinformationen</h6></td>
-																		</tr>
-																	</table>
-																	<table class="center">
-																		<!-- <tr >
-																			<td colspan="2"><h6>Produktinformationen</h6></td>
-																		</tr> -->
-																		@foreach($contactData['product'] as $name => $value)
-																		<tr>
-																			<td><strong>{{$name}}</strong></td>
-																			<td>{{$value}}</td>
-																		</tr>
-																		@endforeach
-
-																		<tr>
-																			<td colspan="2" height="20"></td>
-																		</tr>
-
-
-																		<tr>
-																			<td colspan="2" style="text-align:left;"><h6>Kontaktinformationen</h6>  </td>
-																		</tr>
-																		
-																		@foreach($contactData['user_detail'] as $icon => $value)
-																		<tr>
-																			<td colspan="2" valign="bottom" style="vertical-align:baseline;">
-																				<img src="{{ asset('email/icon-'.$icon.'.jpg') }}" width="10" height="12" style="padding-top:2px;" alt="contact person"/>
-																				<span style="padding-left:10px;">{{$value}}</span>
-																			</td>
-																		</tr>
-																		@endforeach
-
-																		<tr>
-																			<td colspan="2" height="20"></td>
-																		</tr>
-
-																		<tr>
-																			<td colspan="2"><h6>Lieferadresse</h6></td>
-																		</tr>
-																		
-																		@foreach($contactData['delivery'] as $name => $value)
-																		<tr>
-																			<td><strong>{{$name}}</strong></td>
-																			<td>{{$value}}</td>
-																		</tr>
-																		@endforeach
-
-																		<tr>
-																			<td colspan="2" height="20"></td>
-																		</tr>
-																		<tr>
-																			<td colspan="2"><h6>Zusätzliche Informationen</h6></td>
-
-																		</tr>
-																		<tr>
-																			<td colspan="2"><p style="color:#3b3b3a;">{{$contactData['description']}}</p></td>
-																		</tr>
-																	</table>
-																</td>
-															</tr>
-														</table>
-													</center>
-												</td>
-												<td class="expander"></td>
-											</tr>
-											<tr>
-												<td>
-													<table class="center">
-														<tr>
-															<td height="40"></td>
-														</tr>
-													</table>
-												</td>
-												<td class="expander"></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-				<br>
-				<table class="row header">
-					<tr>
-						<td class="center" align="center">
-							<center>
-								<table class="container transparent">
+								<table class="row callout">
 									<tr>
 										<td class="wrapper last">
 											<table class="twelve columns">
 												<tr>
-													<td class="twelve sub-columns last" align="right" style="text-align:center; vertical-align:middle;"><span class="template-label">Copyright &copy; 2015 by <a href="http://www.swiss-magic.net">Swiss Magic</a></span></td>
+													<td class=""><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/banner.jpg"  alt="banner" /></td>
 													<td class="expander"></td>
 												</tr>
 											</table>
 										</td>
 									</tr>
 								</table>
-							</center>
-						</td>
-					</tr>
-				</table>
-			</center>
-		</td>
-	</tr>
-</table>
-<script type="text/javascript">
-	/* <![CDATA[ */
-	(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
-	/* ]]> */
-</script>
-</body>
-</html>
+								<table class="row">
+									<tr>
+										<td class="wrapper last">
+											<table class="twelve columns">
+												<tr>
+													<td><h6 style="font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:0; margin-bottom: 0;">Sie haben eine neue Kontaktanfrage!</h6>
+														<p style="color: #222222; font-family: 'Arial', sans-serif;  font-weight: normal;
+														padding: 0; margin: 0; margin-bottom: 20px; font-size:14px; line-height:20px;">Bitte nehmen Sie Kontakt mit dem Kunden auf. Alle Informationen entnehmen Sie aus dieser E-Mail. Damit es zwischen Ihnen und dem Kunden zu einer Geschäftsabwicklung kommt, raten wir Ihnen diesen so schnell wie möglich zu kontaktieren. Auf Click2ENERGY hat der Kunde nämlich die Möglichkeit mehreren Lieferanten gleichzeitig eine Kontaktanfrage zu senden. Seien Sie also der Erste und erhöhen so die Chancen einer erfolgreichen Geschäftsabwicklung.</p></td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									<table class="row" width="600px" align="center">
+										<tr>
+											<td class="wrapper last offset-by-two">
+												<table class="seven columns" width="330px" align="center">
+													<tr>
+														<td class="center" align="center" style="border:1px solid #14b2b6; padding-left:20px; padding-right:20px; ">
+															<center>
+																<table class="" width="330px" align="center">
+																	<tr>
+																		<td>
+																			<table class="center" style="margin-top:-10px;">
+																				<tr>
+																					<td><h6 style="float:left; padding-left:10px; padding-right:10px; background:#fff; margin-left:-10px; font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:0px; margin-bottom: 20px;">Produktinformationen</h6></td>
+																				</tr>
+																			</table>
+																			<table class="center">
+																				@foreach($contactData['product'] as $name => $value)
+																				<tr>
+																					<td><strong>{{$name}}</strong></td>
+																					<td>{{$value}}</td>
+																				</tr>
+																				@endforeach
+																				<tr>
+																					<td colspan="2" height="20"></td>
+																				</tr>
+																				<tr>
+																					<td colspan="2" style="text-align:left;">
+																						<h6 style="font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:20px; margin-bottom: 20px;">Kontaktinformationen</h6>
+																					</td>
+																				</tr>
+																				@foreach($contactData['user_detail'] as $icon => $value)
+																				<tr>
+																					<td colspan="2" valign="bottom" style="vertical-align:baseline;">
+																						<img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/icon-{{ $icon }}.jpg" width="10" height="12" style="padding-top:2px;" alt="contact person"/>
+																						<span style="padding-left:10px;">{{$value}}</span>
+																					</td>
+																				</tr>
+																				@endforeach
+
+																				<tr>
+																					<td colspan="2" height="20"></td>
+																				</tr>
+																				<tr>
+																					<td colspan="2"><h6 style="margin-top:20px; margin-bottom:20px;font-size: 20px; color: #14b2b6; font-weight: bold;">Lieferadresse</h6></td>
+																				</tr>
+																				@foreach($contactData['delivery'] as $name => $value)
+																				<tr>
+																					<td><strong>{{$name}}</strong></td>
+																					<td>{{$value}}</td>
+																				</tr>
+																				@endforeach
+																				<tr>
+																					<td colspan="2" height="20"></td>
+																				</tr>
+																				<tr>
+																					<td colspan="2">
+																						<h6 style="margin-top:0; margin-bottom: 0;font-size: 20px; color: #14b2b6; font-weight: bold;">Zusätzliche Informationen</h6>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td colspan="2"><p style="color:#3b3b3a; font-family: 'Arial', sans-serif;  font-weight: normal; padding: 0; margin: 0;margin-bottom: 20px;">{{$contactData['description']}}</p></td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</center>
+														</td>
+														<td class="expander"></td>
+													</tr>
+													<tr>
+														<td>
+															<table class="center">
+																<tr>
+																	<td height="40"></td>
+																</tr>
+															</table>
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<br>
+						<table class="row header">
+							<tr>
+								<td class="center" align="center">
+									<center>
+										<table class="container transparent">
+											<tr>
+												<td class="wrapper last">
+													<table class="twelve columns">
+														<tr>
+															<td class="twelve sub-columns last" align="right" style="text-align:center; vertical-align:middle;"><span class="template-label">Copyright &copy; 2015 by <a href="http://www.swiss-magic.net" style="color:#14b2b6;">Swiss Magic</a></span></td>
+															<td class="expander"></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</center>
+								</td>
+							</tr>
+						</table>
+					</center>
+				</td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+			/* <![CDATA[ */
+			(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+			/* ]]> */
+		</script>
+	</body>
+	</html>
