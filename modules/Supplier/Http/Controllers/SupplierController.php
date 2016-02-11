@@ -58,6 +58,6 @@ class SupplierController extends Controller {
 	}
 
 	public function getSupplier($supplier){
-		return $supplier->load('profile');
+		return $supplier->load('profile','country');
 	}
 }
