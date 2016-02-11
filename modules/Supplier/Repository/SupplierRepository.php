@@ -199,7 +199,7 @@
 			$countryArr = [];
 
 			foreach($countries as $country){
-				foreach($country['zip'] as $zip) {
+				foreach($country['zip_code'] as $zip) {
 					$insArr = array_merge($zip, ['supplier_id'=>$supplier->id,'country_id' => $country['id']]);
 					$countryArr[] = with(new SupplierCountry($insArr))->save();
 				}
