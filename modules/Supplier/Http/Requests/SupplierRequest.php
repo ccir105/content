@@ -38,7 +38,7 @@ class SupplierRequest extends FormRequest {
 			'profile' => 'required|array',
 			'profile.email' => 'required|email',
 			'products' => 'required|array|check_product',
-			'country'=>'required|array|check_country'
+			'country'=>'required|array'
 		];
 	}
 
