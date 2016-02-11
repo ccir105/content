@@ -150,7 +150,7 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        willvincent\Feeds\FeedsServiceProvider::class,
+        // willvincent\Feeds\FeedsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -207,7 +207,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Image'     => Intervention\Image\Facades\Image::class,
-        'Feeds'    => willvincent\Feeds\Facades\FeedsFacade::class
+        // 'Feeds'    => willvincent\Feeds\Facades\FeedsFacade::class
     ],
 
 ];
