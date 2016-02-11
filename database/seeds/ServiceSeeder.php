@@ -19,22 +19,22 @@ class ServiceSeeder extends Seeder
     {
     	$list = [
     		'Energie:fuel' => [
-    			'fuel oil',
-    			'diesel',
-    			'wood pellets'
+    			'Heizöl',
+    			'Diesel',
+    			'Holzpellets'
     		],
     		'Heizugen:heater' => [
-    			'oil heating',
-    			'heat pump',
-    			'pellet',
-    			'gas heating',
-    			'Fireplace',
-    			'Other'
+    			'Ölheizung',
+    			'Wärmepumpe',
+    			'Pelletsheizung',
+    			'Gasheizung',
+    			'Kamin',
+    			'Sonstiges'
     		],
     		'Tankervision:tank' => [
-    			'fuel oil',
-    			'diesel',
-    			'wood pellets'
+    			'Heizöl',
+    			'Diesel',
+    			'Holzpellets'
     		],
     	];
 
