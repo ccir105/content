@@ -25,7 +25,7 @@ class ApiRequest {
             $responseData['status'] = false;
             return response()->json($responseData,$statusCode);
         }
-        
+                
         return $response;
     }
 }

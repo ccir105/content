@@ -31,8 +31,8 @@ Route::group(['middleware' => ['web','api.request','jwt.auth'], 'namespace' => '
 	Route::get('supplier/search','SupplierController@searchByQuery');
 	Route::post('image/upload','SupplierController@uploadProfile');
 	Route::get('supplier','SupplierController@getAll');
-	Route::get('supplier/activate/{supplier}','SupplierController@activate');
-	Route::get('supplier/deactivate/{supplier}','SupplierController@deactivate');
+	Route::get('supplier/{supplier}/activate','SupplierController@activate');
+	Route::get('supplier/{supplier}/deactivate','SupplierController@deactivate');
 });
 
 Route::bind('supplier',function($supplier) {
