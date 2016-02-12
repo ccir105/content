@@ -22,9 +22,9 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 
 	Route::get('feed','FeedController@getFeed');
 
-	Route::post('supplier/add/contact','SupplierController@addSupplierContact');
+	Route::post('supplier/add/contact','SupplierController@addSupplierContactEmail');
 
-	Route::post('site/contact','SupplierController@siteContact');
+	Route::post('site/contact','SupplierController@contactFormEmail');
 });
 
 

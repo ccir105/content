@@ -1,5 +1,7 @@
 <?php namespace Modules\Supplier\Http\Controllers;
 
+use Modules\Supplier\Http\Requests\ContactFormRequest;
+use Modules\Supplier\Http\Requests\ContactSupplierAddFormRequest;
 use Modules\Supplier\Http\Requests\SupplierImageUpload;
 use Modules\Supplier\Http\Requests\SupplierRequest;
 use Modules\Supplier\Repository\SupplierRepository;
@@ -10,8 +12,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Modules\Supplier\Helpers\ImageUpload as ImageHelper;
+use Modules\Supplier\Scope\EmailTrait;
 
 class SupplierController extends Controller {
+
+	use EmailTrait;
 
 	private $supplierRepository;
 
@@ -69,7 +74,11 @@ class SupplierController extends Controller {
 		return ['status' => $this->supplierRepository->editActivation(0, $supplier)];
 	}
 
-	public function addSupplierContact(){
+	public function addSupplierContactEmail(ContactSupplierAddFormRequest $request){	
+		return ['status' => $this->sendNewSupplierContactEmail($request)];
+	}
 
+	public function contactFormEmail(ContactFormRequest $request){
+		return ['status' => $this->sendContactEmail($request)];
 	}
 }
