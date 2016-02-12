@@ -58,6 +58,14 @@ class SupplierController extends Controller {
 	}
 
 	public function getSupplier($supplier){
-		return $supplier->load('profile','country');
+		return $supplier->load('profile','country','products');
+	}
+
+	public function activate($supplier){
+		return ['status' => $this->supplierRepository->editActivation(1, $supplier)];
+	}
+
+	public function deactivate($supplier){
+		return ['status' => $this->supplierRepository->editActivation(0, $supplier)];
 	}
 }

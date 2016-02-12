@@ -33,8 +33,11 @@ class SearchBuilder{
             $this->suppliersIds = $result;
         }
 
-        if($return) return $this->suppliersIds;
-        return ($this->suppliersIds) ? Supplier::whereIn('id',$this->suppliersIds)->with('profile')->paginate(5) : ['empty'];
+        return ($this->suppliersIds) ?
+         Supplier::whereIn('id',$this->suppliersIds)
+            ->where('status','=',1)
+            ->with('profile')->paginate(5) 
+        : ['empty'];
     }
 
     public function getRequest(){

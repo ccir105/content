@@ -212,4 +212,9 @@
 			SupplierCountry::where('supplier_id','=',$supplier->id)->delete();
 			return $this->saveCountry($countries, $supplier);
 		}
+
+		public function editActivation($value, $supplier){
+			$supplier->status = $value;
+			return $supplier->save();
+		}
 	}
