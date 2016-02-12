@@ -36,7 +36,7 @@ class SearchBuilder{
         return ( $this->suppliersIds ) ?
          Supplier::whereIn('id',$this->suppliersIds)
             ->where('status','=',1)
-            ->with('profile')->paginate(5) 
+            ->with('profile')->get()
         : ['error' => 1];
     }
 
