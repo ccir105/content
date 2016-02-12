@@ -6,8 +6,11 @@ use Modules\Supplier\Product;
 use Modules\Supplier\Supplier;
 use Validator;
 use Mail;
+use Modules\Supplier\Scope\EmailTrait;
 
 abstract class ServiceContract{
+
+	use EmailTrait;
 
 	protected  $service;
 
@@ -67,6 +70,7 @@ abstract class ServiceContract{
 	 * Getting The Email View
 	 * @return [type] [description]
 	 */
+	
 	abstract function emailDataFormat();
 
 	/**
@@ -75,10 +79,6 @@ abstract class ServiceContract{
 	 */
 	public function sendEmail(){
 
-		$fromEmail = getenv('FROMEMAIL');
-
-        $fromName = getenv('FROMNAME');  
-		
 		$suppliers = $this->request->get('suppliers_id');
 		
 		$suppliers = Supplier::whereIn('id',$suppliers)->get();
@@ -89,10 +89,12 @@ abstract class ServiceContract{
 
 		foreach ($suppliers as $supplier) {
 
-			Mail::send( 'email' , ['contactData' => $emailData ] , function( $m ) use( $supplier, $fromEmail,$fromName ){
-				$m->from( $fromEmail, $fromName );
-				$m->to( $supplier->email_address, "" )->subject('Contact');
-			});
+			$this->sendTemplateEmail([
+				'template' => 'email.supplier-contact',
+				'view_data' => [ 'contactData' => $emailData ],
+				'to_email' => $supplier->email_address,
+				'to_name' => $supplier->company_name
+			]);
 		}
 	}
 

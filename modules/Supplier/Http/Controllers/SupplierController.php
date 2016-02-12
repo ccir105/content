@@ -68,4 +68,8 @@ class SupplierController extends Controller {
 	public function deactivate($supplier){
 		return ['status' => $this->supplierRepository->editActivation(0, $supplier)];
 	}
+
+	public function addSupplierContact(){
+
+	}
 }

@@ -21,6 +21,10 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 	Route::get('country','ServicesController@getCountries');
 
 	Route::get('feed','FeedController@getFeed');
+
+	Route::post('supplier/add/contact','SupplierController@addSupplierContact');
+
+	Route::post('site/contact','SupplierController@siteContact');
 });
 
 

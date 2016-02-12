@@ -86,7 +86,7 @@
 		 * @return \Illuminate\Database\Eloquent\Collection|static[]
 		 */
 		public function all(){
-			return $this->supplier->with('profile')->get();
+			return $this->supplier->with('profile')->latest()->get();
 		}
 
 		/**
