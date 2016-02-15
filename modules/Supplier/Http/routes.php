@@ -59,8 +59,3 @@ Route::bind('service',function($service){
 	}
 	throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
 });
-
-Route::get('test',function(){
-	return Modules\Supplier\Product::withSomething(['1','2']);
-});
-
