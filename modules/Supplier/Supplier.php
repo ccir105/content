@@ -7,7 +7,7 @@ class Supplier extends Model {
 
 	protected $uploadPath = "uploads/";
 
-	protected $fillable = ['company_name', 'first_name', 'last_name', 'company_name', 'email_address', 'phone', 'road', 'postal_code'];
+	protected $fillable = ['company_name', 'first_name', 'last_name', 'place', 'email_address', 'phone', 'road', 'postal_code'];
 
 	protected $appends = ['image'];
 
