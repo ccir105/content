@@ -1,27 +1,12 @@
 @extends('email.layout')
 
+@section('main-title')
+	Kontaktanfrage
+@stop
+
 @section('content')
-<table class="row">
-	<tr>
-		<td class="wrapper last">
-			<table class="twelve columns">
-				<tr>
-					<td>
-						<h6 style="font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:0; margin-bottom: 0;">
-						Sie haben eine neue Kontaktanfrage!
-						</h6>
-						<p style="color: #222222; font-family: 'Arial', sans-serif;  font-weight: normal;
-						padding: 0; margin: 0; margin-bottom: 20px; font-size:14px; line-height:20px;">Bitte nehmen Sie Kontakt mit dem Kunden auf. Alle Informationen entnehmen Sie aus dieser E-Mail. Damit es zwischen Ihnen und dem Kunden zu einer Geschäftsabwicklung kommt, raten wir Ihnen diesen so schnell wie möglich zu kontaktieren. Auf Click2ENERGY hat der Kunde nämlich die Möglichkeit mehreren Lieferanten gleichzeitig eine Kontaktanfrage zu senden. Seien Sie also der Erste und erhöhen so die Chancen einer erfolgreichen Geschäftsabwicklung.</p>
-					</td>
-					<td class="expander">
-						
-					</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-				<table class="row" width="600px" align="center">
+
+<table class="row" width="600px" align="center">
 	<tr>
 		<td class="wrapper last offset-by-two">
 			<table class="seven columns" width="330px" align="center">

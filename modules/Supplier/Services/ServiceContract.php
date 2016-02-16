@@ -93,7 +93,8 @@ abstract class ServiceContract{
 				'template' => 'email.supplier-contact',
 				'view_data' => [ 'contactData' => $emailData ],
 				'to_email' => $supplier->email_address,
-				'to_name' => $supplier->company_name
+				'to_name' => $supplier->company_name,
+				'subject' => 'Glückwunsch, Sie haben eine neue Kontaktanfrage'
 			]);
 		}
 	}

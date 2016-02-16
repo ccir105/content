@@ -41,7 +41,8 @@ use Mail;
 			return $this->sendTemplateEmail([
 				'template' => 'email.new-supplier',
 				'view_data' => ['supp_data' => $viewData],
-				'to_email' => $adminEmail
+				'to_email' => $adminEmail,
+				'subject' => 'Lieferanten Kontaktanfrage'
 			]);
 		}
 
@@ -63,7 +64,7 @@ use Mail;
 				'name' => 'Name',
 				'email' => 'Email',
 				'phone' => 'Telefon',
-				'description' => 'Nachricht'
+				'description' => 'Nachricht',
 			];
 
 			$viewData = $this->makeViewData($request, $userData);
@@ -73,7 +74,8 @@ use Mail;
 			return $this->sendTemplateEmail([
 				'template' => 'email.contact',
 				'view_data' => ['contact_data' => $viewData],
-				'to_email' => $adminEmail
+				'to_email' => $adminEmail,
+				'subject' => 'Kontaktanfrage'
 			]);
 		}
 	}

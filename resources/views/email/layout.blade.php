@@ -661,7 +661,7 @@
 													<td colspan="2" height="25">&nbsp;</td>
 												</tr>
 												<tr>
-													<td><h5 style="font-size: 24px; color: #14b2b6; margin-top:0; margin-bottom: 0;">Glückwunsch!</h5></td>
+													<td><h5 style="font-size: 24px; color: #14b2b6; margin-top:0; margin-bottom: 0;">@yield("main-title","Glückwunsch")!</h5></td>
 													<td style="text-align:right;" align="right"><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/logo.jpg" width="193" height="40" alt="logo" style="float:right;"/></td>
 												</tr>
 											</table>
