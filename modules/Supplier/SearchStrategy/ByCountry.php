@@ -28,6 +28,7 @@ class ByCountry extends SearchStrategyContract {
     public function isValid($request)
     {
         if( isset( $request['country_id'] ) || isset( $request['zip_code'] ) ){
+            
             return true;
         }
 

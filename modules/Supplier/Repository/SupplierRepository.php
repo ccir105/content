@@ -126,7 +126,7 @@
 
 		public function findByCountry( $countryId, $supplierIds = null ,$zipCode = null){
 			
-			$query = $this->fresh()->from('supplier_country');
+			$query = $this->fresh()->from('supplier_country')->where('country_id','=',$countryId);
 
 			if(!is_null( $supplierIds ) ){
 				$query->whereIn( 'supplier_id', $supplierIds);

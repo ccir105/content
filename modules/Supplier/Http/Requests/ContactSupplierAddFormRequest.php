@@ -28,8 +28,7 @@ class ContactSupplierAddFormRequest extends FormRequest {
 			'street' => 'required',
 			'postal_code' => 'required',
 			'city' => 'required',
-			'country' => 'required',
-			'description' => 'required',
+			'country' => 'required'
 		];
 	}
 
