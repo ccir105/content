@@ -21,26 +21,37 @@ use Mail;
 
 		public function sendNewSupplierContactEmail($request){
 
-			$userData = [
-				'company_name' => 'Firma',
-				'first_name' => 'Vorname',
-				'last_name' => 'Nachname',
-				'email' => 'E-Mail Adresse',
-				'phone' => 'Telefon',
+			$basicForm = [
+				'company_name' => 'company',
+				'name' => 'person',
+				'email' => 'envelop',
+				'phone' => 'phone',
+			];
+
+			$request->merge([
+				'name' => $request->get('first_name') . ' ' . $request->get('last_name')
+			]);
+
+			$otherInfo = [
 				'street' => 'Strasse',
 				'postal_code' => 'Postleitzahl',
 				'city' => 'Ort',
-				'country' => 'Land',
-				'description' => 'Nachricht',
+				'country' => 'Land'
 			];
 
-			$viewData = $this->makeViewData($request, $userData);
+			$basicForm = $this->makeViewData($request, $basicForm);
+			
+			$otherInfo = $this->makeViewData($request, $otherInfo);
 
 			$adminEmail = env('ADMIN_EMAIL','sisnet2010@gmail.com');
 
+			$viewData = [ 'basic_form' => $basicForm, 'other_info' => $otherInfo ];
+
+			$viewData['description'] = $request->has('description') ? $request->get('description') : false;
+
 			return $this->sendTemplateEmail([
 				'template' => 'email.new-supplier',
-				'view_data' => ['supp_data' => $viewData],
+				'view_data' => $viewData,
 				'to_email' => $adminEmail,
 				'subject' => 'Lieferanten Kontaktanfrage'
 			]);
@@ -61,10 +72,9 @@ use Mail;
 		public function sendContactEmail($request){
 
 			$userData = [
-				'name' => 'Name',
-				'email' => 'Email',
-				'phone' => 'Telefon',
-				'description' => 'Nachricht',
+				'name' => 'person',
+				'email' => 'envelop',
+				'phone' => 'phone',
 			];
 
 			$viewData = $this->makeViewData($request, $userData);
@@ -73,7 +83,7 @@ use Mail;
 
 			return $this->sendTemplateEmail([
 				'template' => 'email.contact',
-				'view_data' => ['contact_data' => $viewData],
+				'view_data' => ['contact_data' => $viewData,'desc' => $request->get('description')],
 				'to_email' => $adminEmail,
 				'subject' => 'Kontaktanfrage'
 			]);
