@@ -217,4 +217,8 @@
 			$supplier->status = $value;
 			return $supplier->save();
 		}
+
+		public function getLatest(){
+			return $this->supplier->latest()->take(10)->get();
+		}
 	}

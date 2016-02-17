@@ -81,4 +81,8 @@ class SupplierController extends Controller {
 	public function contactFormEmail(ContactFormRequest $request){
 		return ['status' => $this->sendContactEmail($request)];
 	}
+
+	public function getLatestSupplier(){
+		return $this->supplierRepository->getLatest();
+	}
 }

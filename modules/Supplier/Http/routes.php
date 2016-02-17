@@ -25,6 +25,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Supplier\Http\Contr
 	Route::post('supplier/add/contact','SupplierController@addSupplierContactEmail');
 
 	Route::post('site/contact','SupplierController@contactFormEmail');
+
+	Route::get('latest/supplier','SupplierController@getLatestSupplier');
 });
 
 
