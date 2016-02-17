@@ -36,7 +36,6 @@ class SupplierRequest extends FormRequest {
 			'company_name' => 'required',
 			'email_address' => 'required|email',
 			'profile' => 'required|array',
-			'profile.email' => 'required|email',
 			'products' => 'required|array|check_product'
 		];
 	}
