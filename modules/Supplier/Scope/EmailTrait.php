@@ -62,8 +62,8 @@ use Mail;
 			$viewData = [];
 
 			foreach ($userData as $key => $name) {
-				if( $request->has($key) ){
-					$viewData[$name] = $request->get($key);
+				if( $request->has( $key ) && trim( $request->get( $key ) ) != "" ){
+					$viewData[$name] = $request->get( $key );
 				}
 			}
 			return $viewData;
