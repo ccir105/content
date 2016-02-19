@@ -24,6 +24,6 @@ class ByProducts extends SearchStrategyContract {
 
     public function dataKey()
     {
-        return "products";
+        return "product";
     }
 }
