@@ -9,25 +9,14 @@ class FeedController extends Controller {
 	public $keywords = [
 		
 		'energy' => [
-			'Energie',
-			'Heizöl',
-			'Diesel',
-			'Holzpellets',
+			'Heizölpreis'
 		],
 		
 		'heat' => [
-			'Heizungen',
-			'Ölheizung',
-			'Wärmepumpe',
-			'Pelletsheizung',
-			'Gasheizung',
-			'Kamin'
+			'Heizöl'
 		],
 
 		'tank' => [
-			'Tankreinigung',
-			'Heizöl',
-			'Diesel',
 			'Holzpellets'
 		]
 	];
@@ -37,7 +26,8 @@ class FeedController extends Controller {
 		$allNews = [];
 
 		foreach ( $this->keywords as $keywords ) {
-			$keyword =  $keywords[ array_rand( $keywords ) ];
+			
+			$keyword =  $keywords[0];
 		
 			$feed = Feeds::make('https://news.google.com/news/section?q=' . $keyword. '&edchanged=1&ned=de_ch&authuser=0&output=rss');
 		
