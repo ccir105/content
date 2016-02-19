@@ -1,5 +1,9 @@
 @extends('email.layout')
 
+@section('main-title')
+	Glückwunsch!
+@stop
+
 @section('content')
 
 <table class="row">

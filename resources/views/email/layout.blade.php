@@ -651,7 +651,42 @@
 						</tr>
 					</table>
 					<br>
-						@yield('content')
+					<table class="container" width="580" align="center" bgcolor="#fff">
+						<tr>
+							<td>
+								<table class="row" width="580" align="center">
+									<tr>
+										<td bgcolor="#ffffff" class="wrapper last">
+											<table class="twelve columns" width="580" align="center">
+												<tr>
+													<td colspan="2" height="25">&nbsp;</td>
+												</tr>
+												<tr>
+													<td><h5 style="font-size: 24px; color: #14b2b6; margin-top:0; margin-bottom: 0;">@yield('main-title','Kontaktanfrage')</h5></td>
+													<td style="text-align:right;" align="right"><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/logo.jpg" width="193" height="40" alt="logo" style="float:right;"/></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								<table class="row callout">
+									<tr>
+										<td class="wrapper last">
+											<table class="twelve columns">
+												<tr>
+													<td class=""><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/banner.jpg"  alt="banner" /></td>
+													<td class="expander"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							
+							@yield('content')
+
+							</td>
+						</tr>
+					</table>
 					<br>
 					<table class="row header">
 						<tr>
