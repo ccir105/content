@@ -1,126 +1,93 @@
 @extends('email.layout')
 
 @section('content')
-<table class="container" width="580" align="center" bgcolor="#fff">
-						<tr>
-							<td>
-								<table class="row" width="580" align="center">
+	<table class="row" width="600px" align="center">
+		<tr>
+			<td class="wrapper last offset-by-two">
+				<table class="seven columns" width="330px" align="center">
+					<tr>
+						<td class="center" align="center" style="border:1px solid #14b2b6; padding-left:20px; padding-right:20px; ">
+							<center>
+								<table class="" width="330px" align="center">
 									<tr>
-										<td bgcolor="#ffffff" class="wrapper last">
-											<table class="twelve columns" width="580" align="center">
+										<td>
+											<table class="center">
 												<tr>
-													<td colspan="2" height="25">&nbsp;</td>
-												</tr>
-												<tr>
-													<td><h5 style="font-size: 24px; color: #14b2b6; margin-top:0; margin-bottom: 0;">Kontaktanfrage</h5></td>
-													<td style="text-align:right;" align="right"><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/logo.jpg" width="193" height="40" alt="logo" style="float:right;"/></td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
-								<table class="row callout">
-									<tr>
-										<td class="wrapper last">
-											<table class="twelve columns">
-												<tr>
-													<td class=""><img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/banner.jpg"  alt="banner" /></td>
-													<td class="expander"></td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
-								<table class="row" width="600px" align="center">
-									<tr>
-										<td class="wrapper last offset-by-two">
-											<table class="seven columns" width="330px" align="center">
-												<tr>
-													<td class="center" align="center" style="border:1px solid #14b2b6; padding-left:20px; padding-right:20px; ">
-														<center>
-															<table class="" width="330px" align="center">
-																<tr>
-																	<td>
-																		<table class="center">
-																			<tr>
-																				<td colspan="2" style="text-align:left;">
-																					<h6 style="font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:10px; margin-bottom: 20px;">Kontaktinformationen</h6>
-																				</td>
-																			</tr>
-																			<tr>
-																				@foreach($basic_form as $icon => $value)
-																					<tr>
-																						<td colspan="2" valign="bottom" style="vertical-align:baseline;">
-																								<img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/icon-{{ $icon }}.jpg" width="10" height="12" style="padding-top:2px;" alt="contact person"/>
-																								<span style="padding-left:10px;">{{$value}}</span>
-																							</td>
-																					</tr>
-																				@endforeach
-																			</tr>
-																			
-																			<tr>
-																				<td colspan="2" height="10">&nbsp;</td>
-																			</tr>
-																			<tr>
-																				<td colspan="2" height="1">
-																					<table style="border-top:1px solid #d0f0f0;" width="100%">
-																						<tr>
-																							<td height="1">&nbsp;</td>
-																						</tr>
-																					</table>
-																				</td>
-																			</tr>
-																			@foreach($other_info as $name => $value)
-																			<tr>
-																				<td><strong>{{$name}}</strong></td>
-																				<td>{{$value}}</td>
-																			</tr>
-																			@endforeach
-																			<tr>
-																				<td colspan="2" height="20"></td>
-																			</tr>
-																			<tr>
-																				<td colspan="2" height="1">
-																					<table style="border-top:1px solid #d0f0f0;" width="100%">
-																						<tr>
-																							<td height="1">&nbsp;</td>
-																						</tr>
-																					</table>
-																				</td>
-																			</tr>
-																	@if( $description )
-																			<tr>
-																				<td colspan="2">
-																					<h6 style="margin-top:0; margin-bottom: 0;font-size: 20px; color: #14b2b6; font-weight: bold;">Nachricht</h6>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td colspan="2"><p style="color:#3b3b3a; font-family: 'Arial', sans-serif;  font-weight: normal; padding: 0; margin: 0;margin-bottom: 20px;">{{ $description }}</p></td>
-																			</tr>
-																	@endif
-																		</table>
-																	</td>
-																</tr>
-															</table>
-														</center>
+													<td colspan="2" style="text-align:left;">
+														<h6 style="font-size: 20px; color: #14b2b6; font-weight: bold;margin-top:10px; margin-bottom: 20px;">Kontaktinformationen</h6>
 													</td>
-													<td class="expander"></td>
 												</tr>
 												<tr>
-													<td>
-														<table class="center">
+													@foreach($basic_form as $icon => $value)
+														<tr>
+															<td colspan="2" valign="bottom" style="vertical-align:baseline;">
+																	<img src="http://www.swiss-magic-kunden.ch/html/click2energy/email/icon-{{ $icon }}.jpg" width="10" height="12" style="padding-top:2px;" alt="contact person"/>
+																	<span style="padding-left:10px;">{{$value}}</span>
+																</td>
+														</tr>
+													@endforeach
+												</tr>
+												
+												<tr>
+													<td colspan="2" height="10">&nbsp;</td>
+												</tr>
+												<tr>
+													<td colspan="2" height="1">
+														<table style="border-top:1px solid #d0f0f0;" width="100%">
 															<tr>
-																<td height="40"></td>
+																<td height="1">&nbsp;</td>
 															</tr>
 														</table>
 													</td>
-													<td class="expander"></td>
 												</tr>
+												@foreach($other_info as $name => $value)
+												<tr>
+													<td><strong>{{$name}}</strong></td>
+													<td>{{$value}}</td>
+												</tr>
+												@endforeach
+												<tr>
+													<td colspan="2" height="20"></td>
+												</tr>
+												<tr>
+													<td colspan="2" height="1">
+														<table style="border-top:1px solid #d0f0f0;" width="100%">
+															<tr>
+																<td height="1">&nbsp;</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+										@if( $description )
+												<tr>
+													<td colspan="2">
+														<h6 style="margin-top:0; margin-bottom: 0;font-size: 20px; color: #14b2b6; font-weight: bold;">Nachricht</h6>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2"><p style="color:#3b3b3a; font-family: 'Arial', sans-serif;  font-weight: normal; padding: 0; margin: 0;margin-bottom: 20px;">{{ $description }}</p></td>
+												</tr>
+										@endif
 											</table>
 										</td>
 									</tr>
 								</table>
-							</td>
-						</tr>
-					</table>
+							</center>
+						</td>
+						<td class="expander"></td>
+					</tr>
+					<tr>
+						<td>
+							<table class="center">
+								<tr>
+									<td height="40"></td>
+								</tr>
+							</table>
+						</td>
+						<td class="expander"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>		
 @stop
