@@ -1,3 +1,6 @@
+@extends('email.layout')
+
+@section('content')
 	<table class="row" width="600px" align="center">
 	<tr>
 		<td class="wrapper last offset-by-two">
@@ -68,3 +71,5 @@
 		</td>
 	</tr>
 </table>
+
+@stop
