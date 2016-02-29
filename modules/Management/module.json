@@ -1,0 +1,15 @@
+{
+    "name": "Management",
+    "alias": "management",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Management\\Providers\\ManagementServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

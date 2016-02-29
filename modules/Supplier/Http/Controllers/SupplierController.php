@@ -8,5 +8,4 @@ class SupplierController extends Controller {
 	{
 		return view('supplier::index');
 	}
-	
 }
