@@ -4,20 +4,12 @@ Auth::loginUsingId(App\User::orderByRaw("RAND()")->first()->id);
 
 Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
 {
-	Route::group(['prefix' => 'project'],function(){
-		Route::post('/','MainController@create');
-		Route::post('{project}','MainController@update');
-		Route::delete('{project}','MainController@delete');
-		Route::get('/', 'MainController@all');
-		Route::get('{project}','MainController@get');
-	});
-
 	Route::group(['prefix' => 'page'],function(){
-		Route::post('/','MainController@create');
-		Route::post('{page}','MainController@update');
-		Route::delete('{page}','MainController@delete');
-		Route::get('/', 'MainController@all');
-		Route::get('{page}','MainController@get');
+		Route::post('/','PageController@create');
+		Route::post('{page}','PageController@update');
+		Route::delete('{page}','PageController@delete');
+		Route::get('/', 'PageController@all');
+		Route::get('{page}','PageController@find');
 	});
 
 	Route::group(['prefix' => 'field-group'],function(){
@@ -35,18 +27,18 @@ Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\
 		Route::get('/', 'MainController@all');
 		Route::get('{field}','MainController@get');
 	});
-});
 
-Route::bind('project',function($projectId){
 
-	if($project = Modules\Management\Entities\Project::find($projectId))
-	{
-		return $project;
-	}
-	else
-	{
-		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
-	}
+	Route::group(['prefix' => 'project'],function(){
+		Route::post('/','ProjectController@create');
+		Route::post('{project}','ProjectController@update');
+		Route::delete('{project}','ProjectController@delete');
+		Route::get('/', 'ProjectController@all');
+		Route::get('{project}','ProjectController@find');
+		Route::get('{project}/assign/{user}','ProjectController@assignProject');
+		Route::get('{project}/revoke/{user}','ProjectController@revokeProject');
+	});
+
 });
 
 Route::bind('page',function($pageId){
@@ -74,7 +66,6 @@ Route::bind('field_group',function($fieldGroupId){
 	}
 });
 
-
 Route::bind('field',function($fieldId){
 
 	if($field = Modules\Project\Entities\FieldValue::find($fieldId))
@@ -87,3 +78,15 @@ Route::bind('field',function($fieldId){
 	}
 });
 
+
+Route::bind('project',function($projectId){
+
+	if($project = Modules\Project\Entities\Project::find($projectId))
+	{
+		return $project;
+	}
+	else
+	{
+		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+	}
+});

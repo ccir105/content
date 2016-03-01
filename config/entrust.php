@@ -19,7 +19,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'Modules\Management\Entities\Role',
+    'role' => 'Modules\UserManagement\Entities\Role',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'Modules\Management\Entities\Permission',
+    'permission' => 'Modules\UserManagement\Entities\Permission',
 
     /*
     |--------------------------------------------------------------------------

@@ -10,10 +10,10 @@ class ProjectRequest extends FormRequest {
 	 * @return bool
 	 */
 
-	protected $repo;
+	protected $model;
 
 	public function __construct(){
-		$this->repo = RepositoryFactory::make();
+		$this->model = RepositoryFactory::make();
 	}
 
 	public function authorize()
@@ -29,9 +29,8 @@ class ProjectRequest extends FormRequest {
 	public function rules()
 	{
 		$rules = [];
-		$instance = $this->repo->getInstance();
-		if( method_exists( $instance, 'getRules' ) ){
-			$rules = $instance->getRules($this);
+		if( method_exists( $this->model, 'getRules' ) ){
+			$rules = $this->model->getRules($this);
 		}
 		return array_merge($rules,[
 			'title' => 'required',

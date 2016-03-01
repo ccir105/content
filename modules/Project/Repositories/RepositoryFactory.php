@@ -18,7 +18,7 @@ class RepositoryFactory
     public static $models = [
 
         'project' => [
-            'model' => 'Modules\Management\Entities\Project',
+            'model' => 'Modules\Project\Entities\Project',
             'repository' => 'Modules\Project\Repositories\ProjectRepository'
         ],
 
@@ -60,13 +60,7 @@ class RepositoryFactory
 
             $model = new $class;
 
-            $repo = new $repo;
-
-            $repo->setInstance($model);
-
-            self::$repo = $repo;
-
-            return $repo;
+            return $model;
         }
     }
 }
