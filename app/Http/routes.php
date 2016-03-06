@@ -14,7 +14,6 @@
 //Auth::loginUsingId(App\User::find(42)->id); //client
 //Auth::loginUsingId(App\User::find(298)->id); //manager
 //Auth::loginUsingId(App\User::find(299)->id); 2//developer
-//Auth::loginUsingId(App\User::find(300)->id); //manager
 
 Route::get('/', function () {
     return view('welcome');
