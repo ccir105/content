@@ -205,9 +205,13 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+<<<<<<< HEAD
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Feeds'    => willvincent\Feeds\Facades\FeedsFacade::class
+=======
+        'Res' => App\Facade\ResponseFacade::class
+>>>>>>> edce6bf... Role based url and controller made
     ],
 
 ];

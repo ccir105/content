@@ -10,6 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+//Auth::loginUsingId(App\User::find(45)->id); //admin
+//Auth::loginUsingId(App\User::find(42)->id); //client
+Auth::loginUsingId(App\User::find(298)->id); //manager
+//Auth::loginUsingId(App\User::find(299)->id); //developer
+//Auth::loginUsingId(App\User::find(300)->id); //manager
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,4 +35,13 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
+<<<<<<< HEAD
 // Route::post('auth/login','Auth\AuthController@postLogin');
+=======
+Route::get('test',function(){
+    $u = new App\Elastic\User();
+    $u->name = "Hello";
+    $u->email = "asda@asd.com";
+    $u->save();
+});
+>>>>>>> edce6bf... Role based url and controller made

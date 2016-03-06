@@ -23,4 +23,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+<<<<<<< HEAD
+=======
+
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = \Hash::make($value);
+    }
+
+    public function projects(){
+        return $this->belongsToMany('Modules\Project\Entities\Project', 'projects_users','user_id');
+    }
+>>>>>>> edce6bf... Role based url and controller made
 }
