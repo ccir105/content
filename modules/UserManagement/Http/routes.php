@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\UserManagement\Http\Controllers'], function()
 {
-	Route::group(['prefix' => 'admin'],function() {
+	Route::group(['prefix' => 'admin','middleware' => ['role:admin']],function() {
 		Route::get('user','UserManagementController@all');
 		Route::get('roles', 'UserManagementController@getRoles');
 		Route::get('user/{user}','UserManagementController@find');

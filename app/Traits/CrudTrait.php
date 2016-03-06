@@ -7,21 +7,26 @@
  */
 
 namespace App\Traits;
-
+use Res;
 
 trait CrudTrait
 {
     protected $model;
 
     public function save( $data ){
+
         $this->model->fill($data);
-        $this->model->save();
-        return $this->model;
+
+        if( $this->model->save() ){
+            return $this->model;
+        }
+
+        return Res::fail([],'The operation is invalid',FAIL);
     }
 
     public function delete($model) {
         $model->delete();
-        return ['status' => 1 ];
+        return Res::success([],'Successfully Deleted');
     }
 
     public function setInstance( $model ){
@@ -30,14 +35,28 @@ trait CrudTrait
     }
 
     public function all(){
-        return $this->model->all();
+        return Res::success($this->model->all());
     }
 
     public function find($model){
-        return $model;
+        return Res::success($model);
     }
 
     public function getInstance(){
         return $this->model;
+    }
+
+    public function belongs($model, $user){
+        if( !$user->hasRole('admin') ){
+            if(!$model->belongs($user) ){
+                \App::abort(403);
+            }
+
+            if(isset($model->users)){
+                unset($model->users);
+            }
+        }
+
+        return true;
     }
 }

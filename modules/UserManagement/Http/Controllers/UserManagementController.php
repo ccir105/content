@@ -5,7 +5,7 @@ use Modules\UserManagement\Entities\Role;
 use Modules\UserManagement\Repositories\UserRepository;
 use Modules\UserManagement\Http\Requests\UserRequest;
 use Pingpong\Modules\Routing\Controller;
-
+use Res;
 class UserManagementController extends Controller {
 
 	use CrudTrait;
@@ -16,7 +16,7 @@ class UserManagementController extends Controller {
 	}
 
 	public function all(){
-		return $this->getInstance()->with('roles')->get();
+		return Res::success( $this->getInstance()->with('roles')->get() );
 	}
 
 	public function getRoles(){

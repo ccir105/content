@@ -1,43 +1,80 @@
 <?php
 
-Auth::loginUsingId(App\User::orderByRaw("RAND()")->first()->id);
-
 Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
 {
-	Route::group(['prefix' => 'page'],function(){
-		Route::post('/','PageController@create');
-		Route::post('{page}','PageController@update');
-		Route::delete('{page}','PageController@delete');
-		Route::get('/', 'PageController@all');
-		Route::get('{page}','PageController@find');
-	});
 
-	Route::group(['prefix' => 'field-group'],function(){
-		Route::post('/','MainController@create');
-		Route::post('{field_group}','MainController@update');
-		Route::delete('{field_group}','MainController@delete');
-		Route::get('/', 'MainController@all');
-		Route::get('{field_group}','MainController@get');
-	});
+	/**
+	 * Page mangement
+	 */
 
-	Route::group(['prefix' => 'field'],function(){
-		Route::post('/','MainController@create');
-		Route::post('{field}','MainController@update');
-		Route::delete('{field}','MainController@delete');
-		Route::get('/', 'MainController@all');
-		Route::get('{field}','MainController@get');
+	/**
+	 * Normal Auth Request
+	 *
+	 */
+
+	Route::group(['middleware' => 'auth'],function()
+	{
+		Route::group(['prefix' => 'page'],function()
+		{
+			Route::get('{page}','PageController@find');
+		});
+
+		Route::get('project/{project}','ProjectController@find');
+
+		Route::get('projects','ClientController@myProject');
 	});
 
 
-	Route::group(['prefix' => 'project'],function(){
-		Route::post('/','ProjectController@create');
-		Route::post('{project}','ProjectController@update');
-		Route::delete('{project}','ProjectController@delete');
-		Route::get('/', 'ProjectController@all');
-		Route::get('{project}','ProjectController@find');
-		Route::get('{project}/assign/{user}','ProjectController@assignProject');
-		Route::get('{project}/revoke/{user}','ProjectController@revokeProject');
+	Route::group(['middleware' => ['role:admin|project_manager']],function()
+	{
+		//page crud
+		Route::group(['prefix' => 'page'],function()
+		{
+			Route::post('/','PageController@create');
+			Route::post('{page}','PageController@update');
+			Route::delete('{page}','PageController@delete');
+		});
+
+		//field group crud
+		Route::group(['prefix' => 'field-group'],function()
+		{
+			Route::post('/','MainController@create');
+			Route::post('{field_group}','MainController@update');
+			Route::delete('{field_group}','MainController@delete');
+			Route::get('{field_group}','MainController@find');
+		});
+
+		Route::group(['prefix' => 'field'],function()
+		{
+			Route::post('/','MainController@create');
+			Route::post('{field}','MainController@update');
+			Route::delete('{field}','MainController@delete');
+			Route::get('{field}','MainController@find');
+		});
+
+		Route::group(['prefix' => 'project'],function(){
+			Route::post('{project}','ProjectController@update');
+			Route::get('{project}/assign/{user}','ProjectController@assignProject');
+			Route::get('{project}/revoke/{user}','ProjectController@revokeProject');
+		});
 	});
+
+	Route::group(['middleware'=>['role:admin']], function()
+	{
+		Route::group(['prefix' => 'project'],function()
+		{
+			Route::get('/','ProjectController@all');
+			Route::get('create-from/{project}','ProjectController@createFromExisting');
+			Route::post('/','ProjectController@create');
+			Route::delete('{project}','ProjectController@delete');
+			Route::get('user/{user}','ProjectController@getByUser');
+		});
+	});
+
+
+
+	Route::post('project/{project}/save/{page}',['middleware' => ['role:client'],'uses'=>'ClientController@saveForm']);
+
 
 });
 

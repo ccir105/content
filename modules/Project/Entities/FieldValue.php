@@ -1,13 +1,17 @@
 <?php namespace Modules\Project\Entities;
    
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+
 use Request;
+use Modules\Project\Entities\Page;
 
-class FieldValue extends Model {
+class FieldValue extends Model implements BelongsContract{
 
-    protected $fillable = ['field_id','group_id','page_id','order','title','description'];
+    protected $fillable = ['field_id','group_id','page_id','order','title','description','slug'];
 
     protected $table = "field_values";
+
 
     public function field(){
         return $this->belongsTo('Modules\Project\Entities\Field','field_id','id');
@@ -30,7 +34,7 @@ class FieldValue extends Model {
 
     public function save( array $options = [] ){
 
-        if( Request::has('page_id') ){
+        if( Request::has('page_id') or !is_null( $this->page_id ) ){
             $this->group_id = null;
         }
 
@@ -38,6 +42,35 @@ class FieldValue extends Model {
             $this->page_id = null;
         }
 
-        parent::save();
+        if( !isset( $this->id ) ){
+            $this->slug = preg_replace('/[\d]+/','',strtolower(str_random(7)));
+        }
+
+        return parent::save();
+    }
+
+    public static function findBySlug($slug){
+        return self::whereSlug($slug)->first();
+    }
+
+    public function belongs(User $user )
+    {
+
+        $type = ( is_null( $this->group_id ) ) ? 'page' : 'group';
+
+        if( $type == "page" ) {
+
+            $page = Page::find($this->page_id);
+        }
+        else
+        {
+            $group = $this->group;
+            $page = Page::find($group->page_id);
+        }
+
+        if( $page->belongs($user) )
+        {
+            return true;
+        }
     }
 }

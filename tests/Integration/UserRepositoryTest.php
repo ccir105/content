@@ -20,7 +20,6 @@ class UserFactoryTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->repo = new Modules\Management\Repositories\UserRepository();
     }
 
     public function create($data = array()){
@@ -40,9 +39,11 @@ class UserFactoryTest extends TestCase
         return $savedUser;
     }
 
+    /**
+     *
     public function testCreate()
     {
-        $role = \Modules\Management\Entities\Role::whereName('admin')->first();
+        $role = \Modules\UserManagement\Entities\Role::whereName('admin')->first();
 
         $user = $this->create( ['roles' => $role->id ]);
 
@@ -59,15 +60,50 @@ class UserFactoryTest extends TestCase
 
         $this->assertEquals(2,$this->repo->all()->count());
     }
+     */
 
-    public function test_all_user_contain_roles(){
+    public function test_duplicate_project(){
 
-        $role1 = \Modules\Management\Entities\Role::whereName('admin')->first();
+        $project = \Modules\Project\Entities\Project::find(4);
 
-        $role2 = \Modules\Management\Entities\Role::whereName('client')->first();
+        $duplicateProject = $project->duplicate();
 
-        $this->create();
+        $this->assertEquals($project->pages->count(),$duplicateProject->pages->count());
 
-        $this->create();
+        $duplicatePage = $duplicateProject->pages->first();
+
+        $orginalPage = $project->pages->first();
+
+        $this->assertEquals($duplicatePage->fields->count(),$orginalPage->fields->count());
+    }
+
+    public function test_user(){
+        $faker = Faker\Factory::create();
+        $user = new App\Elastic\User();
+        $user->name = $faker->name;
+        $user->email = $faker->email;
+        $user->save();
+
+        $conn = $user->elasticConnection;
+
+        $query = new \Elastica\Query\Ids();
+
+        $query->setIds([52, 53]);
+
+        $result = $conn->search($query);
+    }
+
+    public function test_where_clause(){
+        $faker = Faker\Factory::create();
+        $user = new App\Elastic\User;
+        $result = $user->whereLike(['name','email'],'Br')->search();
+        echo PHP_EOL;
+        foreach($result as $re){
+            echo $re->name . PHP_EOL;
+        }
+
+//        echo $result->count();
+
+//        print_r($user->search());
     }
 }

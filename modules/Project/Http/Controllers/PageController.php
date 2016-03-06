@@ -8,11 +8,13 @@
 
 namespace Modules\Project\Http\Controllers;
 use App\Http\Requests\Request;
+use Illuminate\Contracts\Auth\Guard;
 use Modules\Project\Entities\Page;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Pingpong\Modules\Routing\Controller;
 use App\Traits\CrudTrait;
+use Res;
 
 class PageController extends Controller
 {
@@ -23,35 +25,43 @@ class PageController extends Controller
         $this->setInstance($page);
     }
 
-    public function update( ProjectRequest $request, $model ){
-        $this->setInstance( $model );
-        return $this->save( $request->all() );
-    }
-
-    public function remove( $model ){
-        return ['status' => $this->setInstance( $model )->delete() ];
-    }
-
-    public function create(ProjectRequest $request){
-        return $this->save($request->all());
-    }
-
-    public function find( $model )
+    public function update( ProjectRequest $request, $model )
     {
-        $groups = $model->fieldGroups->load('fields.field');
+        $project = Project::find($request->get('project_id'));
 
-        $groups->each(function($group){
-            $group->is_group = true;
-        });
+        if($this->belongs( $project, \Auth::user() ) )
+        {
+            $this->setInstance( $model );
+            return Res::success($this->save( $request->all() ));
+        }
 
-        $fields = $model->fields->load('field');
+    }
 
-        $fields->each(function($field){
-            $field->is_field = true;
-        });
+    public function remove(Guard $auth, $model )
+    {
+        if( $this->belongs( $auth, $model ) )
+        {
+            return Res::success($this->setInstance( $model )->delete());
+        }
+    }
 
+    public function create(ProjectRequest $request)
+    {
+        if( $request->has('project_id') )
+        {
+            $project = Project::find($request->get('project_id'));
 
+            if($this->belongs($project,\Auth::user()))
+            {
+                return Res::success($this->save($request->all()));
+            }
+        }
+    }
 
-        return $groups->merge($fields);
+    public function find(Guard $auth, $model )
+    {
+        if( $this->belongs( $model, $auth->user() ) ){
+            return Res::success($model->getEntities());
+        }
     }
 }

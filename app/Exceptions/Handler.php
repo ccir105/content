@@ -9,7 +9,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Res;
+use App\Facade;
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,7 +48,11 @@ class Handler extends ExceptionHandler
     public function render( $request, Exception $e )
     {
         if( $e instanceof ModelNotFoundException ){
-            return response()->json( [ 'success' => 0, 'status' => 'not_found' ], 404 );
+            return Res::fail([],'The Entity is not found',NOT_FOUND);
+        }
+
+        if(method_exists($e,'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN){
+            return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
         }
 
         return parent::render( $request,  $e);
