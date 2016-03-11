@@ -13,7 +13,7 @@ use Modules\Project\Entities\Page;
 use Pingpong\Modules\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Project\Entities\Project;
-
+use Res;
 class ClientController extends Controller
 {
     protected $user;
@@ -28,22 +28,27 @@ class ClientController extends Controller
         return $this->user->projects;
     }
 
-    public function saveForm(Request $request,Project $project,Page $page)
+    public function saveForm(Request $request,Page $page)
     {
-        $slugs = $page->getAllEntitiesSlug();
-
-        foreach($slugs as $slug)
+        if($page->belongs($this->user) )
         {
-           if( $request->has( $slug ) )
-           {
-                $fieldValue = FieldValue::findBySlug($slug);
+            $slugs = $page->getAllEntitiesSlug();
 
-                $fieldValue->value = $request->get($slug);
+            foreach($slugs as $slug)
+            {
+               if( $request->has( $slug ) )
+               {
+                    $fieldValue = FieldValue::findBySlug($slug);
 
-                $fieldValue->save();
-           }
+                    $fieldValue->value = $request->get($slug);
+
+                    $fieldValue->save();
+               }
+            }
+
+           return Res::success([],'Page data are saved successfully');
         }
 
-        return ['status' => '1'];
+        return Res::fail([],'Unathorized', UNAUTHORIZED);
     }
 }

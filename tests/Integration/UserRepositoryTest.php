@@ -64,43 +64,39 @@ class UserFactoryTest extends TestCase
 
     public function test_duplicate_project(){
 
-        $project = \Modules\Project\Entities\Project::find(4);
-
-        $duplicateProject = $project->duplicate();
-
-        $this->assertEquals($project->pages->count(),$duplicateProject->pages->count());
-
-        $duplicatePage = $duplicateProject->pages->first();
-
-        $orginalPage = $project->pages->first();
-
-        $this->assertEquals($duplicatePage->fields->count(),$orginalPage->fields->count());
+//        $project = \Modules\Project\Entities\Project::find(4);
+//
+//        $duplicateProject = $project->duplicate();
+//
+//        $this->assertEquals($project->pages->count(),$duplicateProject->pages->count());
+//
+//        $duplicatePage = $duplicateProject->pages->first();
+//
+//        $orginalPage = $project->pages->first();
+//
+//        $this->assertEquals($duplicatePage->fields->count(),$orginalPage->fields->count());
     }
 
-    public function test_user(){
-        $faker = Faker\Factory::create();
-        $user = new App\Elastic\User();
-        $user->name = $faker->name;
-        $user->email = $faker->email;
-        $user->save();
-
-        $conn = $user->elasticConnection;
-
-        $query = new \Elastica\Query\Ids();
-
-        $query->setIds([52, 53]);
-
-        $result = $conn->search($query);
-    }
+//    public function test_user(){
+//        $faker = Faker\Factory::create();
+//        $user = new App\Elastic\User();
+//        $user->name = $faker->name;
+//        $user->email = $faker->email;
+//        $user->save();
+//
+//        $conn = $user->elasticConnection;
+//
+//        $query = new \Elastica\Query\Ids();
+//
+//        $query->setIds([52, 53]);
+//
+//        $result = $conn->search($query);
+//    }
 
     public function test_where_clause(){
-        $faker = Faker\Factory::create();
-        $user = new App\Elastic\User;
-        $result = $user->whereLike(['name','email'],'Br')->search();
-        echo PHP_EOL;
-        foreach($result as $re){
-            echo $re->name . PHP_EOL;
-        }
+//        $faker = Faker\Factory::create();
+//        $user = new App\Elastic\User;
+//        $result = $user->whereLike(['name','email'],'Br')->search();
 
 //        echo $result->count();
 

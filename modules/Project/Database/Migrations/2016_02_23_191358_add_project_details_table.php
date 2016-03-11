@@ -12,6 +12,20 @@ class AddProjectDetailsTable extends Migration {
      */
     public function up()
     {
+
+        Schema::create('projects', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->string('title');
+            $table->integer('country_id')->unsigned();
+            $table->integer('status');
+            $table->integer('order');
+            $table->text('description');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
+        });
+
         Schema::create('project_pages', function(Blueprint $table)
         {
             $table->increments('id');

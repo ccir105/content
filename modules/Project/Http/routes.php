@@ -2,11 +2,6 @@
 
 Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
 {
-
-	/**
-	 * Page mangement
-	 */
-
 	/**
 	 * Normal Auth Request
 	 *
@@ -73,7 +68,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\
 
 
 
-	Route::post('project/{project}/save/{page}',['middleware' => ['role:client'],'uses'=>'ClientController@saveForm']);
+	Route::post('page/{page}/save',['middleware' => ['role:client'],'uses'=>'ClientController@saveForm']);
 
 
 });

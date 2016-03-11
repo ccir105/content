@@ -9,11 +9,14 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
+//*/
 //Auth::loginUsingId(App\User::find(45)->id); //admin
 //Auth::loginUsingId(App\User::find(42)->id); //client
+Auth::loginUsingId(App\User::find(48)->id); //client
 //Auth::loginUsingId(App\User::find(298)->id); //manager
-//Auth::loginUsingId(App\User::find(299)->id); 2//developer
+//Auth::loginUsingId(App\User::find(300)->id); //manager
+//Auth::loginUsingId(App\User::find(299)->id); //developer
+//268 project thread  403
 
 Route::get('/', function () {
     return view('welcome');

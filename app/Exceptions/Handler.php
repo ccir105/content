@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exception\HttpResponseException;
 use Res;
 use App\Facade;
 class Handler extends ExceptionHandler
@@ -47,12 +48,39 @@ class Handler extends ExceptionHandler
      */
     public function render( $request, Exception $e )
     {
-        if( $e instanceof ModelNotFoundException ){
+        if( $e instanceof ModelNotFoundException )
+        {
             return Res::fail([],'The Entity is not found',NOT_FOUND);
         }
 
-        if(method_exists($e,'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN){
+
+        if( $e instanceof HttpResponseException )
+        {
+            if(method_exists($e, 'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN)
+            {
+                return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
+            }
+
+            if(method_exists($e,'getResponse'))
+            {
+                $response = $e->getResponse();
+
+                $response->getStatusCode();
+
+                if($response->getStatusCode() == UNPROCESSED_ENTITY)
+                {
+                   return Res::fail($response->getData(),'Validation Error',UNPROCESSED_ENTITY);
+                }
+            }
+        }
+
+
+        if( (method_exists($e,'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN) || $e instanceof HttpResponseException){
             return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
+        }
+
+        if($e instanceof HttpException){
+            return Res::fail([],'Not Found',NOT_FOUND);
         }
 
         return parent::render( $request,  $e);

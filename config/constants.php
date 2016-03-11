@@ -24,3 +24,8 @@ if(!defined('ACCESS_FORBIDDEN'))
 {
     define('ACCESS_FORBIDDEN','403');
 }
+
+if(!defined('UNPROCESSED_ENTITY'))
+{
+    define('UNPROCESSED_ENTITY','422');
+}

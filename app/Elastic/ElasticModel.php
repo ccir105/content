@@ -26,11 +26,13 @@ abstract class ElasticModel extends Model{
         $this->query = new ElasticQuery($this->elasticConnection);
     }
 
-    public function schema(){
+    public function schema()
+    {
         return false;
     }
 
-    public function save(array $options=[]){
+    public function save(array $options=[])
+    {
         parent::save($options);
         $this->elasticConnection->addItem( $this->toArray());
     }
@@ -41,7 +43,8 @@ abstract class ElasticModel extends Model{
         return $this;
     }
 
-    public function search($count = null){
+    public function search($count = null)
+    {
 
         return $this->makeInstance($this->query->get($count));
     }
@@ -50,34 +53,43 @@ abstract class ElasticModel extends Model{
     {
         $instance = new static;
 
-        if(count($items) == 1){
+        if(count($items) == 1)
+        {
             return $this->createInstance($instance,$items[0]);
-        }else if(count($items) == 0){
+
+        }
+        else if(count($items) == 0)
+        {
             $items = [];
         }
         $instance = new static;
 
-        foreach($items as $key => $item){
+        foreach($items as $key => $item)
+        {
             $items[$key] = $this->createInstance($instance,$item);
         }
 
         return $instance->newCollection($items);
     }
 
-    public function createInstance($static, $item){
+    public function createInstance($static, $item)
+    {
         return $static->newFromBuilder($item);
     }
 
-    public function find($ids = []){
+    public function find($ids = [])
+    {
         return $this->makeInstance($this->query->find($ids));
     }
 
-    public function whereIn($coulmn, $values){
+    public function whereIn($coulmn, $values)
+    {
         $this->query->whereIn($coulmn,$values);
         return $this;
     }
 
-    public function whereLike($column,$value){
+    public function whereLike($column,$value)
+    {
         $columns = !is_array($column) ? [$column] : $column;
         $this->query->whereLike($columns,$value);
         return $this;

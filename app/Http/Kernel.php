@@ -51,5 +51,7 @@ class Kernel extends HttpKernel
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'thread.view' => \Modules\Threads\Http\Middleware\ThreadView::class,
+        'comment.control' => \Modules\Threads\Http\Middleware\CommentDelete::class
     ];
 }

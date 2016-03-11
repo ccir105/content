@@ -111,4 +111,8 @@ class Project extends Model {
         $newField->group_id = $groupId;
         $newField->save();
     }
+
+    public function threads(){
+        return $this->hasMany('Modules\Threads\Entities\Thread','project_id','id');
+    }
 }
