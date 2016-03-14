@@ -12,7 +12,7 @@
 //*/
 //Auth::loginUsingId(App\User::find(45)->id); //admin
 //Auth::loginUsingId(App\User::find(42)->id); //client
-Auth::loginUsingId(App\User::find(48)->id); //client
+//Auth::loginUsingId(App\User::find(48)->id); //client
 //Auth::loginUsingId(App\User::find(298)->id); //manager
 //Auth::loginUsingId(App\User::find(300)->id); //manager
 //Auth::loginUsingId(App\User::find(299)->id); //developer

@@ -34,7 +34,7 @@ class CommentRepo
 
         $this->comment = new Comment();
 
-        return $this->comment;
+        return $comment;
     }
 
     public function setUser(User $user = null)
