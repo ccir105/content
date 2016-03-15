@@ -18,9 +18,6 @@
 //Auth::loginUsingId(App\User::find(299)->id); //developer
 //268 project thread  403
 
-Route::get('/', function () {
-    return \Auth::user();
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +30,9 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
-Route::get('test',function(){
-    $u = new App\Elastic\User();
-    $u->name = "Hello";
-    $u->email = "asda@asd.com";
-    $u->save();
+Route::group(['middleware' => ['api']], function () {
+   Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController',
+	]);
 });

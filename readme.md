@@ -1,27 +1,28 @@
-## Laravel PHP Framework
+## Easy Content
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+1) Client Content Management System
+3) Form Builder
+2) Threads(task) Management System
+3) Roles based (admin, client, manager, developer)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Installing
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+1) clone the repository
 
-## Official Documentation
+2)composer is required to install the laravel. so download the composer.phar (search in google)
+after that,
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+if you install globally run "composer install -vvv" ( vvv stands for verbose )
 
-## Contributing
+3) After the installation is completed create databse and create .env file. We will have the .env.example as a format of env file. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+4) Finally running "bash install.sh" (bash script), the application database setup and fake datas are insterded
 
-## Security Vulnerabilities
+## users admin
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+you can login as admin
+admin@admin.com:admin in url /auth/login (POST)
 
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+## Guide
+	There is a json easy_content.json a collection of post man.
+	You can import and will have all apis listed to make a complete application 

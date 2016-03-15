@@ -15,7 +15,7 @@ trait CrudTrait
 
     public function save( $data ){
 
-        $this->model->fill($data);
+        $this->model->fill( $data );
 
         if( $this->model->save() ){
             return $this->model;

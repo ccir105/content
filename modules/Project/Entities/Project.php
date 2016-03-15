@@ -13,11 +13,6 @@ class Project extends Model {
         return $this->hasMany('Modules\Project\Entities\Page','project_id','id');
     }
 
-    public function save(array $options = []){
-        $this->user_id = \Auth::user()->id;
-        return parent::save();
-    }
-
     public function assignedUsers(){
         return $this->belongsToMany('App\User','projects_users','project_id','user_id');
     }

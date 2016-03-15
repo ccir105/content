@@ -55,6 +55,9 @@ class ProjectController extends Controller
 
     public function create(ProjectRequest $request)
     {
+        $project = $this->getInstance();
+        $project->user_id = $this->user->id;
+        $this->setInstance($project);
         return Res::success($this->save($request->all()));
     }
 

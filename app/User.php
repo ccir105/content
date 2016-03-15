@@ -19,9 +19,6 @@ class User extends Authenticatable
      */
 
     protected $appends = ['type'];
-
-    protected $attributes = ['type'];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
