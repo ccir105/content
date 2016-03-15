@@ -29,5 +29,3 @@ admin@admin.com:admin in url /auth/login (POST)
 ## Guide
 	There is a json easy_content.json a collection of post man.
 	You can import and will have all apis listed to make a complete application
-
-To login we need to add  
