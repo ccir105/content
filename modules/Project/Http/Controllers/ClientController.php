@@ -25,7 +25,7 @@ class ClientController extends Controller
 
     public function myProject()
     {
-        return $this->user->projects;
+        return $this->user->projects->load('assignedUsers');
     }
 
     public function saveForm(Request $request,Page $page)

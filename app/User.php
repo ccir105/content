@@ -6,19 +6,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Authenticatable
 {
+    use EntrustUserTrait;
+
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    
-    use EntrustUserTrait;
 
+    protected $appends = ['type'];
 
-
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $attributes = ['type'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -29,13 +31,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['type'];
-
-    public function getTypeAttribute(){
-
-    }
+    public function getTypeAttribute()
     {
-        return $this->exists;
+       $name =  ( !$this->roles->isEmpty() ) ? $this->roles->first()->name : "";
+        unset($this->pivot);
+        unset($this->roles);
+        return $name;
     }
 
     public function setPasswordAttribute($value){
@@ -71,6 +72,7 @@ class User extends Authenticatable
     {
         $myThreads = $this->threads;
         $assignedThreads = $this->assignedToMe()->where('project_id',$project->id)->get();
-        return $myThreads->merge($assignedThreads);
+        $threads = $myThreads->merge($assignedThreads);
+        return $threads->load('assignedTo');
     }
 }

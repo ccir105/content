@@ -18,10 +18,16 @@ class Project extends Model {
         return parent::save();
     }
 
+    public function assignedUsers(){
+        return $this->belongsToMany('App\User','projects_users','project_id','user_id');
+    }
+
     public function assign(User $user){
 
         $query = $this->newQueryWithoutScopes();
+
         $isAssigned = $query->from('projects_users')->where('user_id',$user->id)->where('project_id',$this->id)->first();
+
         if( is_null($isAssigned) ){
             $query->from('projects_users')->insert([
                 'project_id' => $this->id,

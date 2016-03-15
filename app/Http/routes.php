@@ -19,7 +19,7 @@
 //268 project thread  403
 
 Route::get('/', function () {
-    return view('welcome');
+    return \Auth::user();
 });
 
 /*

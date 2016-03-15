@@ -73,4 +73,9 @@ class ProjectController extends Controller
     public function createFromExisting(Project $project){
         return $project;
     }
+
+    public function all(){
+        $projects = $this->model->with('assignedUsers')->get();
+        return $projects;
+    }
 }

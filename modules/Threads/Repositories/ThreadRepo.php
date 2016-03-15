@@ -91,11 +91,13 @@ class ThreadRepo
 
     public function get(Project $project)
     {
+        $threads = $this->user->myThreads($project);
+
         if($this->user->hasRole( ['admin','project_manager'] ) )
         {
-            return $project->threads;
+            $threads =  $project->threads;
         }
 
-        return $this->user->myThreads($project);
+        return $threads->load('assignedTo')->toArray();
     }
 }
