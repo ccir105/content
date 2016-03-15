@@ -31,8 +31,22 @@
 */
 
 Route::group(['middleware' => ['api']], function () {
-   Route::controllers([
+
+	Route::controllers([
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
 	]);
+
+	Route::group(['middleware' => ['jwt.auth','my.auth']],function()
+	{
+		Route::get('me',function(){
+			if( Auth::check())
+			{
+				return Auth::user();
+			}
+			return Res::fail([],'Failed');
+		});
+	});
+
+
 });
