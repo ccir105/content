@@ -1,9 +1,9 @@
 ## Easy Content
 
-[1) Client Content Management System]
-[3) Form Builder]
-[2) Threads(task) Management System]
-[3) Roles based (admin, client, manager, developer)]
+- [1 Client Content Management System]
+- [3 Form Builder]
+- [2 Threads(task) Management System]
+- [3 Roles based (admin, client, manager, developer)]
 
 ## Installing
 
@@ -15,7 +15,7 @@ after that,
 if you install globally run ```bash
 	composer install -vvv
 	``` 
-	- [ vvv stands for verbose ]
+- [ vvv stands for verbose ]
 
 3) After the installation is completed create databse and create .env file. We will have the .env.example as a format of env file. 
 
