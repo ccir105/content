@@ -19,7 +19,7 @@ if you install globally run ```bash
 
 3) After the installation is completed create databse and create .env file. We will have the .env.example as a format of env file. 
 
-4) Finally running "bash install.sh" (bash script), the application database setup and fake datas are insterded
+4) Finally running "```bash bash install.sh```" (bash script), the application database setup and fake datas are insterded
 
 ## users admin
 
