@@ -1,9 +1,7 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\Threads\Http\Controllers'], function()
+Route::group(['middleware' => ['api','jwt.auth','my.auth'], 'prefix' => 'api', 'namespace' => 'Modules\Threads\Http\Controllers'], function()
 {
-	Route::group(['middleware' => 'auth'], function()
-	{
 		/**
 		 * This route can be called from admin, client, and manager
 		 * Admin user can access all the routes
@@ -72,7 +70,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\
 		Route::get('project/{project}/thread/{thread}/assign/{user}',['middleware'=>'thread.view','uses'=>'ThreadsController@assign']);
 
 		Route::get('project/{project}/thread/{thread}/revoke/{user}',['middleware'=>'thread.view','uses'=>'ThreadsController@revoke']);
-	});
 });
 
 

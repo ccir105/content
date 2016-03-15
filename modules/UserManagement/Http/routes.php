@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'api', 'namespace' => 'Modules\UserManagement\Http\Controllers'], function()
+Route::group(['middleware' =>['api','jwt.auth','my.auth'], 'prefix' => 'api', 'namespace' => 'Modules\UserManagement\Http\Controllers'], function()
 {
 	Route::group(['prefix' => 'admin','middleware' => ['role:admin']],function() {
 		Route::get('user','UserManagementController@all');
