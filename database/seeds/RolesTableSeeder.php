@@ -30,6 +30,8 @@ class RolesTableSeeder extends Seeder
 			$owner->description = 'Have Control to all resources'; // optional
 			$owner->save();
 
+			$user->attachRole($owner);
+
 			$owner = new Role();
 			$owner->name = 'client';
 			$owner->display_name = 'Client'; // optional
