@@ -8,6 +8,7 @@
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
+
     RewriteCond %{HTTP:Authorization} ^(.*)
     RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
@@ -21,4 +22,4 @@
       Header always add Access-Control-Allow-Origin "*"
       Header always add Access-Control-Allow-Methods "HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS"
       Header always add Access-Control-Allow-Headers "x-requested-with, content-type, origin, authorization, Authorization, accept, client-security-token, X-Auth-Token"
- </IfModule>
+  </IfModule>
