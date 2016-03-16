@@ -16,3 +16,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+      Header always add Access-Control-Allow-Origin "*"
+      Header always add Access-Control-Allow-Methods "HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS"
+      Header always add Access-Control-Allow-Headers "x-requested-with, content-type, origin, authorization, Authorization, accept, client-security-token, X-Auth-Token"
+ </IfModule>
