@@ -30,6 +30,11 @@
 |
 */
 
+Route::get('/',function()
+{
+	return Res::success(['page'=>'Home'],'Welcome to easy content');
+});
+
 Route::group(['middleware' => ['api']], function () {
 
 	Route::controllers([
