@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'comment.control' => \Modules\Threads\Http\Middleware\CommentDelete::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
-        'my.auth'  => \App\Http\Middleware\ApiRequest::class
+        'my.auth'  => \App\Http\Middleware\ApiRequest::class,
+        'user.belongs_project' => \App\Http\Middleware\BelongsToProject::class,
     ];
 }

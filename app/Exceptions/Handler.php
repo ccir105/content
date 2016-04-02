@@ -53,13 +53,8 @@ class Handler extends ExceptionHandler
             return Res::fail([],'The Entity is not found',NOT_FOUND);
         }
 
-
         if( $e instanceof HttpResponseException )
         {
-            if(method_exists($e, 'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN)
-            {
-                return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
-            }
 
             if(method_exists($e,'getResponse'))
             {
@@ -69,19 +64,24 @@ class Handler extends ExceptionHandler
 
                 if($response->getStatusCode() == UNPROCESSED_ENTITY)
                 {
-                   return Res::fail($response->getData(),'Validation Error',UNPROCESSED_ENTITY);
+                    return Res::fail($response->getData(),'Validation Error',UNPROCESSED_ENTITY);
                 }
+            }
+
+            if(method_exists( $e, 'getStatusCode' ) and $e->getStatusCode() == ACCESS_FORBIDDEN)
+            {
+                return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
             }
         }
 
 
-        if( (method_exists($e,'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN) || $e instanceof HttpResponseException){
+        if( (method_exists( $e,'getStatusCode') and $e->getStatusCode() == ACCESS_FORBIDDEN) || $e instanceof HttpResponseException){
             return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
         }
 
-        if($e instanceof HttpException){
-            return Res::fail([],'Not Found',NOT_FOUND);
-        }
+//        if($e instanceof HttpException){
+//            return Res::fail([],'Not Found',NOT_FOUND);
+//        }
 
         return parent::render( $request,  $e);
     }

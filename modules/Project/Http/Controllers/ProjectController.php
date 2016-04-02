@@ -30,34 +30,28 @@ class ProjectController extends Controller
 
     public function assignProject($project, $user)
     {
-        if( $this->belongs($project, \Auth::user()))
-        {
-            return Res::success( $project->assign($user) );
-        }
+        return Res::success( $project->assign($user) );
     }
 
     public function revokeProject($project, $user)
     {
-        if( $this->belongs($project, \Auth::user()))
-        {
-            return Res::success($project->revoke($user));
-        }
+        return Res::success( $project->revoke($user));
     }
 
     public function update( ProjectRequest $request, $model )
     {
-        if($this->belongs($model,$this->user))
-        {
-            $this->setInstance( $model );
-            return Res::success($this->save( $request->all() ));
-        }
+        $this->setInstance( $model );
+        return Res::success($this->save( $request->all() ));
     }
 
-    public function create(ProjectRequest $request)
+    public function create( ProjectRequest $request )
     {
         $project = $this->getInstance();
+
         $project->user_id = $this->user->id;
-        $this->setInstance($project);
+
+        $this->setInstance( $project );
+
         return Res::success($this->save($request->all()));
     }
 
@@ -68,17 +62,18 @@ class ProjectController extends Controller
 
     public function find(Project $project)
     {
-        if( $this->belongs($project,$this->user) ){
-            return Res::success($project->load('pages'));
-        }
+        return Res::success($project->load('pages'));
     }
 
-    public function createFromExisting(Project $project){
-        return $project;
+    public function createFromExisting(Project $project)
+    {
+        return Res::success($project->duplicate());
     }
 
     public function all(){
+
         $projects = $this->model->with('assignedUsers')->get();
-        return $projects;
+
+        return Res::success($projects);
     }
 }

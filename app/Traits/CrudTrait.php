@@ -24,7 +24,7 @@ trait CrudTrait
         return Res::fail([],'The operation is invalid',FAIL);
     }
 
-    public function delete($model) {
+    public function delete( $model ) {
         $model->delete();
         return Res::success([],'Successfully Deleted');
     }
@@ -38,7 +38,7 @@ trait CrudTrait
         return Res::success($this->model->all());
     }
 
-    public function find($model){
+    public function find( $model ){
         return Res::success($model);
     }
 

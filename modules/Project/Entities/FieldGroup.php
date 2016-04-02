@@ -17,7 +17,7 @@ class FieldGroup extends Model implements BelongsContract{
 
     public function getRules($request){
         return [
-            'page_id' => 'required|exists:project_pages,id'
+
         ];
     }
 

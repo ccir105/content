@@ -20,21 +20,38 @@ class UserManagementController extends Controller {
 	}
 
 	public function getRoles(){
-		return Role::all();
+		return Res::success(Role::all());
 	}
 
 	public function update( UserRequest $request, User $user ){
 		$repo = new UserRepository();
-		return $this->find($repo->update($user, $request->all()));
+		return Res::success($this->find($repo->update($user, $request->all())));
 	}
 
 	public function create( UserRequest $request){
 		$repo = new UserRepository();
-		return $this->find($repo->create($request->all()));
+		return Res::success($this->find($repo->create($request->all())));
 	}
 
 	public function find(User $user){
-		return $user->load('roles');
+		return Res::success($user->load('roles'));
 	}
 
+	public function assignRole(User $user,$role)
+	{
+		if( $user->hasRole($role->name) )
+		{
+			return Res::fail([],'User Already Assigned',400);
+		}
+		return Res::success( $user->attachRole($role) );
+	}
+
+	public function revokeRole(User $user,$role)
+	{
+		if( !$user->hasRole($role->name) )
+		{
+			return Res::fail([],'User Doesnt have this role',400);
+		}
+		return Res::success( $user->detachRole($role));
+	}
 }

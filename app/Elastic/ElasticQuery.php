@@ -22,25 +22,16 @@ class ElasticQuery
 
     public $filter;
 
-    public function __construct(ElasticConnection $elastic)
+    public function __construct( ElasticConnection $elastic )
     {
         $this->elastic = $elastic;
         $this->query = new BoolQuery();
         $this->refresh();
     }
 
-    function refresh(){
+    function refresh()
+    {
         $this->query = new BoolQuery();
-    }
-
-    function where($key, $operator,$value){
-
-        $op = $this->operator();
-
-        if(in_array($operator,array_keys($op)))
-        {
-            $op[$operator]($key,$value);
-        }
     }
 
     function get($count = null)
@@ -63,66 +54,71 @@ class ElasticQuery
 
         return $return;
     }
-
-    public function operator(){
-      return [
-            '=' => function($key, $value)
-            {
-                $term = new Term([$key => $value]);
-
-                $this->query->addFilter($term);
-            },
-
-            '<' => function($key, $value)
-            {
-                $query = new Range($key,[ 'lt' =>$value ]);
-                $this->query = $query;
-            },
-            ">" => function($key, $value)
-            {
-                $query = new Range($key,[ 'gte'=> $value ]);
-                $this->query->addFilter($query);
-            },
-            "<=" => function($key, $value)
-            {
-                $query = new Range($key,[ 'gte'=> $value ]);
-                $this->query->addFilter($query);
-            },
-            "<>" => function($key, $value)
-            {
-                $query = new Term([ $key => $value]);
-                $this->query->addMustNot($query);
-            },
-            ">=" => function($key, $value)
-            {
-                $query = new Range($key,[ 'gte' => $value ]);
-                $this->query->addFilter($query);
-            }
-        ];
-    }
-
-    public function find($ids)
-    {
-        $query = new Ids();
-        $query->setIds($ids);
-        $this->query->addMust($query);
-        $results = $this->get();
-        return $results;
-    }
-
-    public function whereIn($column, $values = [])
-    {
-        $query = new Terms();
-        $query->setTerms($column,$values);
-        $this->query->addFilter($query);
-    }
-
-    public function whereLike($columns, $value)
-    {
-        $query = new QueryString( $value);
-
-        $query->setFields( $columns );
-
-        $this->query->addMust($query);
-    }
+//
+//    function all()
+//    {
+//        return $this->get();
+//    }
+//
+//    public function operator()
+//    {
+//      return [
+//            '=' => function($key, $value)
+//            {
+//                $term = new Term([$key => $value]);
+//
+//                $this->query->addFilter($term);
+//            },
+//            '<' => function($key, $value)
+//            {
+//                $query = new Range($key,[ 'lt' =>$value ]);
+//                $this->query = $query;
+//            },
+//            ">" => function($key, $value)
+//            {
+//                $query = new Range($key,[ 'gt'=> $value ]);
+//                $this->query->addFilter($query);
+//            },
+//            "<=" => function($key, $value)
+//            {
+//                $query = new Range($key,[ 'gte'=> $value ]);
+//                $this->query->addFilter($query);
+//            },
+//            "<>" => function($key, $value)
+//            {
+//                $query = new Term([ $key => $value]);
+//                $this->query->addMustNot($query);
+//            },
+//            ">=" => function($key, $value)
+//            {
+//                $query = new Range($key,[ 'gte' => $value ]);
+//                $this->query->addFilter($query);
+//            }
+//        ];
+//    }
+//
+//    public function find( $ids )
+//    {
+//        $query = new Ids();
+//        $query->setIds($ids);
+//        $this->query->addMust($query);
+//        $results = $this->get();
+//        return $results;
+//    }
+//
+//    public function whereIn($column, $values = [])
+//    {
+//        $query = new Terms();
+//        $query->setTerms($column,$values);
+//        $this->query->addFilter($query);
+//    }
+//
+//    public function whereLike($columns, $value)
+//    {
+//        $query = new QueryString( $value);
+//
+//        $query->setFields( $columns );
+//
+//        $this->query->addMust($query);
+//    }
 }

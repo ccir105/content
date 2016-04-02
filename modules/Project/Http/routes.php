@@ -1,18 +1,15 @@
 <?php
 
-Route::group(['middleware' => ['api','jwt.auth','my.auth'], 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
+Route::group(['middleware' => ['api'/*,'jwt.auth','my.auth'*/], 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
 {
 	/**
 	 * Normal Auth Request
 	 *
 	 */
 
-	Route::group(['middleware' => 'auth'],function()
+	Route::group(['middleware' => ['auth','user.belongs_project']],function()
 	{
-		Route::group(['prefix' => 'page'],function()
-		{
-			Route::get('{page}','PageController@find');
-		});
+		Route::get('project/{project}/page/{page}','PageController@find');
 
 		Route::get('project/{project}','ProjectController@find');
 
@@ -20,38 +17,24 @@ Route::group(['middleware' => ['api','jwt.auth','my.auth'], 'prefix' => 'api', '
 	});
 
 
-	Route::group(['middleware' => ['role:admin|project_manager']],function()
+	Route::group(['prefix' => 'project','middleware' => ['role:admin|project_manager','user.belongs_project']],function()
 	{
-		//page crud
-		Route::group(['prefix' => 'page'],function()
-		{
-			Route::post('/','PageController@create');
-			Route::post('{page}','PageController@update');
-			Route::delete('{page}','PageController@delete');
-		});
+		Route::post('{project}','ProjectController@update');
+		Route::get('{project}/assign/{user}','ProjectController@assignProject');
+		Route::get('{project}/revoke/{user}','ProjectController@revokeProject');
 
-		//field group crud
-		Route::group(['prefix' => 'field-group'],function()
-		{
-			Route::post('/','MainController@create');
-			Route::post('{field_group}','MainController@update');
-			Route::delete('{field_group}','MainController@delete');
-			Route::get('{field_group}','MainController@find');
-		});
+		Route::post('{project}/page','PageController@create');
+		Route::post('{project}/page/{page}','PageController@update');
+		Route::delete('{project}/page/{page}','PageController@remove');
 
-		Route::group(['prefix' => 'field'],function()
-		{
-			Route::post('/','MainController@create');
-			Route::post('{field}','MainController@update');
-			Route::delete('{field}','MainController@delete');
-			Route::get('{field}','MainController@find');
-		});
+		Route::post('{project}/page/{page}/field-group','FieldGroupController@create');
+		Route::post('{project}/page/{page}/field-group/{field_group}','FieldGroupController@update');
+		Route::delete('{project}/field-group/{field_group}','FieldGroupController@remove');
 
-		Route::group(['prefix' => 'project'],function(){
-			Route::post('{project}','ProjectController@update');
-			Route::get('{project}/assign/{user}','ProjectController@assignProject');
-			Route::get('{project}/revoke/{user}','ProjectController@revokeProject');
-		});
+
+		Route::post('{project}/page/{page}/field','FieldController@create');
+		Route::post('{project}/page/{page}/field/{field}','FieldController@update');
+		Route::delete('{project}/field/{field}','FieldController@remove');
 	});
 
 	Route::group(['middleware'=>['role:admin']], function()
@@ -65,8 +48,6 @@ Route::group(['middleware' => ['api','jwt.auth','my.auth'], 'prefix' => 'api', '
 			Route::get('user/{user}','ProjectController@getByUser');
 		});
 	});
-
-
 
 	Route::post('page/{page}/save',['middleware' => ['role:client'],'uses'=>'ClientController@saveForm']);
 

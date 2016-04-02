@@ -17,9 +17,9 @@ class ApiRequest
     {
         if( $user = JWTAuth::toUser() )
         {
-            \Auth::loginUsingId($user->id);
+            \Auth::loginUsingId( $user->id );
         }
 
-        return $next($request);
+        return $next( $request );
     }
 }

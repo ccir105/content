@@ -10,12 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 //*/
-//Auth::loginUsingId(App\User::find(45)->id); //admin
-//Auth::loginUsingId(App\User::find(42)->id); //client
-//Auth::loginUsingId(App\User::find(48)->id); //client
-//Auth::loginUsingId(App\User::find(298)->id); //manager
-//Auth::loginUsingId(App\User::find(300)->id); //manager
-//Auth::loginUsingId(App\User::find(299)->id); //developer
+Auth::loginUsingId(App\User::find(1)->id); //admin
+//Auth::loginUsingId(App\User::find(6)->id); //developer
+//Auth::loginUsingId(App\User::find(20)->id); //client
+//Auth::loginUsingId(App\User::find(19)->id); //manager
+//Auth::loginUsingId(App\User::find(17)->id); //developer
 //268 project thread  403
 
 
@@ -47,11 +46,9 @@ Route::group(['middleware' => ['api']], function () {
 		Route::get('me',function(){
 			if( Auth::check())
 			{
-				return Auth::user();
+				return Res::success(Auth::user());
 			}
 			return Res::fail([],'Failed');
 		});
 	});
-
-
 });

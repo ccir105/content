@@ -25,12 +25,12 @@ class ClientController extends Controller
 
     public function myProject()
     {
-        return $this->user->projects->load('assignedUsers');
+        return Res::success($this->user->projects->load('assignedUsers'));
     }
 
     public function saveForm(Request $request,Page $page)
     {
-        if($page->belongs($this->user) )
+        if( $page->belongs( $this->user ) )
         {
             $slugs = $page->getAllEntitiesSlug();
 

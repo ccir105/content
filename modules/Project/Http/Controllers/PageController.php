@@ -25,43 +25,26 @@ class PageController extends Controller
         $this->setInstance($page);
     }
 
-    public function update( ProjectRequest $request, $model )
+    public function update( ProjectRequest $request, $project, $page)
     {
-        $project = Project::find($request->get('project_id'));
-
-        if($this->belongs( $project, \Auth::user() ) )
-        {
-            $this->setInstance( $model );
-            return Res::success($this->save( $request->all() ));
-        }
-
+        $request->merge(['project_id' => $project->id]);
+        $this->setInstance( $page );
+        return Res::success($this->save( $request->all() ));
     }
 
-    public function remove(Guard $auth, $model )
+    public function remove($project, $page )
     {
-        if( $this->belongs( $auth, $model ) )
-        {
-            return Res::success($this->setInstance( $model )->delete());
-        }
+        return $this->delete($page);
     }
 
-    public function create(ProjectRequest $request)
+    public function create(ProjectRequest $request, $project)
     {
-        if( $request->has('project_id') )
-        {
-            $project = Project::find($request->get('project_id'));
-
-            if($this->belongs($project,\Auth::user()))
-            {
-                return Res::success($this->save($request->all()));
-            }
-        }
+        $request->merge(['project_id' => $project->id ]);
+        return Res::success($this->save($request->all()));
     }
 
-    public function find(Guard $auth, $model )
+    public function find(Guard $auth, $project, $page )
     {
-        if( $this->belongs( $model, $auth->user() ) ){
-            return Res::success($model->getEntities());
-        }
+        return Res::success($page->getEntities());
     }
 }

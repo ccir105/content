@@ -8,7 +8,7 @@ abstract class ElasticModel extends Model{
 
     protected $table;
 
-    protected $query;
+    protected $dsl;
 
     public $elasticConnection;
 
@@ -23,7 +23,7 @@ abstract class ElasticModel extends Model{
             'schema' => $this->schema()
         ]);
 
-        $this->query = new ElasticQuery($this->elasticConnection);
+        $this->dsl = new ElasticQuery( $this->elasticConnection );
     }
 
     public function schema()
@@ -31,22 +31,16 @@ abstract class ElasticModel extends Model{
         return false;
     }
 
-    public function save(array $options=[])
+    public function save( array $options=[] )
     {
-        parent::save($options);
+        $status = parent::save($options);
         $this->elasticConnection->addItem( $this->toArray());
+        return $status;
     }
 
-    public function where( $column, $operator, $value)
+    public function get( $count = null )
     {
-        $this->query->where( $column, $operator, $value);
-        return $this;
-    }
-
-    public function search($count = null)
-    {
-
-        return $this->makeInstance($this->query->get($count));
+        return $this->makeInstance( $this->dsl->get( $count ) );
     }
 
     public function makeInstance($items = array())
@@ -75,23 +69,5 @@ abstract class ElasticModel extends Model{
     public function createInstance($static, $item)
     {
         return $static->newFromBuilder($item);
-    }
-
-    public function find($ids = [])
-    {
-        return $this->makeInstance($this->query->find($ids));
-    }
-
-    public function whereIn($coulmn, $values)
-    {
-        $this->query->whereIn($coulmn,$values);
-        return $this;
-    }
-
-    public function whereLike($column,$value)
-    {
-        $columns = !is_array($column) ? [$column] : $column;
-        $this->query->whereLike($columns,$value);
-        return $this;
     }
 }

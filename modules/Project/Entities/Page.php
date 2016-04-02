@@ -21,9 +21,10 @@ class Page extends Model implements BelongsContract{
         return $this->hasMany('Modules\Project\Entities\FieldValue','page_id','id');
     }
 
-    public function getRules($request){
+    public function getRules( $request )
+    {
         return [
-            'project_id' => 'exists:projects,id'
+
         ];
     }
 

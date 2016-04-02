@@ -24,7 +24,6 @@ class FieldValue extends Model implements BelongsContract{
     public function getRules( $request ) {
 
         $rules = [
-            'page_id' => 'required_without:group_id|exists:project_pages,id',
             'group_id' => 'required_without:page_id|exists:field_groups,id',
             'field_id' => 'required|exists:fields,id'
         ];
