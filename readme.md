@@ -1,9 +1,9 @@
-## Easy Content
+## Content Management System
 
 - [1 Client Content Management System]
 - [3 Form Builder]
 - [2 Threads(task) Management System]
-- [3 Roles based (admin, client, manager, developer)]
+- [3 Roles based (admin, client, manager, user)]
 
 ## Installing
 
