@@ -2,7 +2,6 @@
 
 use App\User;
 use Illuminate\Http\Request;
-use Modules\UserManagement\Entities\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
 use Validator;
@@ -44,7 +43,7 @@ class AuthController extends Controller
     {
         $this->jwt = $jwt;
         
-        $this->middleware('guest', ['except' => 'logout']);
+        // $this->middleware('guest', ['except' => 'logout']);
     }
 
     /**
@@ -76,18 +75,17 @@ class AuthController extends Controller
             'password' => $data['password'],
         ]);
 
-        $role = Role::whereName('client')->first();
+        $token = $this->jwt->fromUser($user);
 
-        $user->attachRole($role);
 
-        return $user;
+        return Res::success(compact('token'),'Welcome ' . $data['name'] . '. Thank you for registering. Have A nice day!');
+    }
+
+    public function getLogin(){
+
     }
 
     public function postLogin( Request $request ){
-
-        $this->validate($request, [
-            'email' => 'required|email', 'password' => 'required',
-        ]);
 
         $credentials = $request->only( 'email', 'password' );
 
@@ -105,16 +103,16 @@ class AuthController extends Controller
                 $token = $this->jwt->attempt( $credentials, $userData );
                 
                 if( $token  ){
-                    return Res::success(compact('token'));
+                    return Res::success(compact('token'),'You are successfully logined. Have a nice day!');
                 }
             }
 
             catch( JWTException $exception ) {
-                return Res::fail( ['error' => 'jwt auth'] ,'JWTAuth Error',UNPROCESSED_ENTITY);
+                return Res::fail( ['error' => 'jwt auth'] ,'JWTAuth Error',400);
             }
         }
-    
-        return Res::fail( ['error' => 'fake_credentials' ] ,'Credentials are invalids',UNPROCESSED_ENTITY);
+   
+        return Res::fail( ['error' => 'fake_credentials' ] ,'Credentials are invalids',400);
     }
 
     public function postRegister(Request $request)

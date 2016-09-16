@@ -7,8 +7,6 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "pingpong/modules": "~2.0",
-        "zizaco/entrust": "^1.5",
         "tymon/jwt-auth": "^0.5.9"
     },
     "require-dev": {
