@@ -147,7 +147,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         /*
          * Application Service Providers...
