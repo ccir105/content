@@ -136,6 +136,7 @@ class MainController extends Controller
         if(count($data) == 0){
             return ['empty' => true];
         }
+        return $data;
     }
 
     public function updatePending( $advice )
