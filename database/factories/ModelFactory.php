@@ -20,54 +20,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Modules\Project\Entities\Project::class, function(Faker\Generator $faker){
+$factory->define(App\Advice::class, function( Faker\Generator $faker ){
    return [
-       'title' => $faker->sentence,
-       'description' => $faker->paragraph,
-       'user_id' => App\User::all()->random()->id
+       'text' => $faker->sentence,
+       'type' => 0,
+       'user_id' => 1
    ];
-});
-
-$factory->define(Modules\Project\Entities\Page::class, function(Faker\Generator $faker){
-    $orders = range(1,5);
-    return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'order' => $orders[array_rand($orders)],
-        'project_id' => Modules\Project\Entities\Project::all()->random()->id
-    ];
-});
-
-$factory->define(Modules\Project\Entities\FieldGroup::class, function(Faker\Generator $faker){
-    $orders = range(1,5);
-    return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'order' => $orders[array_rand($orders)],
-        'page_id' => Modules\Project\Entities\Page::all()->random()->id
-    ];
-});
-
-$factory->define(Modules\Project\Entities\FieldValue::class, function(Faker\Generator $faker){
-    $orders = range(1,5);
-    return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'order' => $orders[array_rand($orders)],
-        'group_id' => Modules\Project\Entities\FieldGroup::all()->random()->id,
-        'field_id' => Modules\Project\Entities\Field::all()->random()->id,
-        'value' => $faker->word
-    ];
-});
-
-$factory->define(Modules\Project\Entities\FieldValue::class, function(Faker\Generator $faker){
-    $orders = range(1,5);
-    return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'order' => $orders[array_rand($orders)],
-        'page_id' => Modules\Project\Entities\Page::all()->random()->id,
-        'field_id' => Modules\Project\Entities\Field::all()->random()->id,
-        'value' => $faker->word
-    ];
 });

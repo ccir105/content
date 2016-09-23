@@ -1,45 +1,31 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends('layouts.app')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Welcome</div>
 
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="panel-body">
+                    Your Application's Landing Page.
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+
+@endsection
+@section('script');
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script>
+     // var ns = io.connect('127.0.0.1:8000/test');
+     var guest = io.connect('127.0.0.1:8000/guest');
+
+     // guest.on('guest-broadcast', function(data){
+     //    console.log('guest broadcast');
+     // });
+
+     // ns.emit('guest-namespace',{});
+</script>
+@endsection

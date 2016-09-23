@@ -7,10 +7,10 @@ class UserAdvicePivot extends PivotTable {
 	const ACTIVE = 1;
 	const NOT_ACTIVE = 2;
 
-	const EVERY_DAY = 1;
-	const OFTEN = 2;
-	const SOMETIME = 3;
-	const RARELY = 4;
+	const HIGH = 1;
+	const MID_HIGH = 2;
+	const MID_LOW = 3;
+	const LOW = 4;
 
 	protected static $status = [
 		self::ACTIVE => 'Active',
@@ -18,11 +18,13 @@ class UserAdvicePivot extends PivotTable {
 	];
 
 	protected static $priority = [
-		self::EVERY_DAY => 'Every Day',
-		self::OFTEN => 'Often',
-		self::SOMETIME => 'Sometime',
-		self::RARELY => 'Rarely'
+		self::HIGH => 'Every Day',
+		self::MID_HIGH => 'Often',
+		self::MID_LOW => 'Sometime',
+		self::LOW => 'Rarely'
 	];
+
+	protected $appends = ['priority_code'];
 
 	function getStatusAttribute( $value )
 	{
@@ -32,5 +34,9 @@ class UserAdvicePivot extends PivotTable {
 	function getPriorityAttribute( $value )
 	{
 		return self::$priority[$value];
+	}
+
+	function getPriorityCodeAttribute(){
+		return array_search($this->priority, self::$priority);
 	}
 }

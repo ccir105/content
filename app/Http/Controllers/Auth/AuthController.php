@@ -9,7 +9,7 @@ use Pingpong\Modules\Routing\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Res;
-
+use Hash;
 class AuthController extends Controller
 {
     /*
@@ -72,10 +72,14 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
         ]);
 
-        $token = $this->jwt->fromUser($user);
+        $token = $this->jwt->fromUser($user, [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'user_id' => $user->id
+        ]);
 
 
         return Res::success(compact('token'),'Welcome ' . $data['name'] . '. Thank you for registering. Have A nice day!');

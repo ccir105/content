@@ -21,11 +21,18 @@
 |
 */
 
+Route::group(['middleware' => ['web']], function(){
+	Route::controllers([
+		'password' => 'Auth\PasswordController'
+	]);
+
+	Route::post('reset/login', 'MainController@loginAfterReset');
+});
+
 Route::group(['middleware' => ['api']], function () {
 
 	Route::controllers([
 		'auth' => 'Auth\AuthController',
-		'password' => 'Auth\PasswordController',
 	]);
 
 	Route::post('email/unique','MainController@isUniqueEmail');
@@ -46,10 +53,23 @@ Route::group(['middleware' => ['api']], function () {
 
 		Route::get('global','MainController@globalAdvice');
 
+		Route::get('me/advices','MainController@myAdviceByPrority');
+
 		Route::post('global/{global}','MainController@addToMyAdvice');
 
 		Route::post('settings/{settingKey}','MainController@changeUserSettings');
+
+		Route::post('update/{advice}/pending','MainController@updatePending');
 	});
+});
+
+Route::bind('advice', function($id){
+	if($advice = App\Advice::find($id)){
+		return $advice;
+	}
+	else{
+		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+	}
 });
 
 Route::bind('global',function($adviceId){

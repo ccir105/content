@@ -8,14 +8,25 @@ use App\Http\Requests\UniqueEmailRequest;
 use App\Advice;
 use App\UserAdvice;
 use Auth;
-use User;
+use App\User;
 use Res;
 use App\Http\Requests\AddNewAdvice;
 use App\Http\Requests\AddGlobalAdvice;
 use App\Http\Requests\ChangeInfoRequest;
+use App\Http\Requests\LoginAfterResetRequest;
+use Session;
+use Tymon\JWTAuth\JWTAuth;
+use App\Events\GlobalAdviceNotifier;
 
 class MainController extends Controller
-{
+{   
+    protected $jwt;
+
+    public function __construct(JWTAuth $jwt)
+    {
+        $this->jwt = $jwt;
+    }
+
     public function isUniqueEmail(UniqueEmailRequest $request)
     {
    		return Res::success(['exists' => true]);	
@@ -30,6 +41,11 @@ class MainController extends Controller
     	
     	if( $advice->save() )
     	{
+            if($request->get('isGlobal'))
+            {
+                event(new GlobalAdviceNotifier($advice, 'created'));
+            }
+
 	    	if( $this->saveUserAdvice( $advice, $request->get('priority') ) )
 	    	{
 	    		return Auth::user()->myAdvice()->where('advices.id',$advice->id)->first();
@@ -89,5 +105,48 @@ class MainController extends Controller
         }
 
         return $this->failedResonse();
+    }
+
+
+    public function loginAfterReset(LoginAfterResetRequest $request)
+    {
+        $email = decrypt( $request->get('data') );
+        
+        $time = decrypt( $request->get('hash') );
+
+        $currentTime = time();
+
+        if( is_integer( $time ) )
+        {
+            $validTime = $time * 60;
+
+            if( $currentTime < $validTime )
+            {
+                $user = User::where('email' , $email)->first();
+
+                $token = $this->jwt->fromUser($user, ['user_id'=>$user->id,'name'=>$user->name, 'email'=>$user->email ] );
+
+                return is_null( $user ) ? Res::fail([], 'You are not the real person') : Res::success( ['token' => $this->jwt->fromUser($user)], $user->name . ', your password is reset. Have a nice day'); 
+            }
+        }
+    }
+
+    public function myAdviceByPrority(){
+        $data = Auth::user()->myAdviceByPrority();
+        if(count($data) == 0){
+            return ['empty' => true];
+        }
+    }
+
+    public function updatePending( $advice )
+    {   
+        $userAdvice = UserAdvice::where('user_id', Auth::user()->id )->where('advice_id',$advice->id )->first();
+        if( $userAdvice)
+        {
+            $userAdvice->is_pending = 0;
+            $userAdvice->save();
+            return Res::success([]);
+        }
+        return Res::fail([]);
     }
 }

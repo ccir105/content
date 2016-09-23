@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET', 'NQmLuiVDrqgptz4KRbPM2JLEGzlBjwKH'),
+    'secret' => env('APP_KEY', 'NQmLuiVDrqgptz4KRbPM2JLEGzlBjwKH'),
 
     /*
     |--------------------------------------------------------------------------
