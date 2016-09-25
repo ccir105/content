@@ -67,7 +67,7 @@ auth.on('connection', function(socket)
     });
 
     socket.on('logout', function(data){
-        socket.disconnect();
+        socket.leave('advice:update');
     });
 });
 
