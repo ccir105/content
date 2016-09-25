@@ -13,8 +13,7 @@ var _ = require('underscore');
 
 require('dotenv').config({path: '/var/www/html/content/.env'});
 
-var jwtSecret = process.env.APP_KEY;
-
+var jwtSecret = process.env.JWT_SECRET;
 io.adapter(ioredis({host: 'localhost', port: 6379}))
 
 var sub = redis.createClient()
@@ -61,12 +60,14 @@ auth.on('connection', function(socket)
             
             so[decoded.user_id] = socket;
                 
-            console.log(Object.keys(so))
-
             socket.emit('authenticated', decoded);
 
             socket.join('advice:update');
         });
+    });
+
+    socket.on('logout', function(data){
+        socket.disconnect();
     });
 });
 

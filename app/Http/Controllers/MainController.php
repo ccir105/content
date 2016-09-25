@@ -78,7 +78,8 @@ class MainController extends Controller
     public function globalAdvice()
     {
     	$myGlobalAdvice = Auth::user()->myAdvice(1)->lists('advices.id');
-        return Advice::globals()->whereNotIn('id', $myGlobalAdvice->toArray())->get();
+        
+        return Advice::globals()->whereNotIn('id', $myGlobalAdvice->toArray())->orderBy('created_at','desc')->get();
     }
 
     public function addToMyAdvice(AddGlobalAdvice $request, $advice)
