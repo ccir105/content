@@ -55,7 +55,6 @@ class Handler extends ExceptionHandler
 
         if( $e instanceof HttpResponseException )
         {
-
             if(method_exists($e,'getResponse'))
             {
                 $response = $e->getResponse();
@@ -79,9 +78,9 @@ class Handler extends ExceptionHandler
             return Res::fail([],'Access Forbidden',ACCESS_FORBIDDEN);
         }
 
-//        if($e instanceof HttpException){
-//            return Res::fail([],'Not Found',NOT_FOUND);
-//        }
+       if($e instanceof HttpException){
+           return Res::fail([],'Not Found',NOT_FOUND);
+       }
 
         return parent::render( $request,  $e);
     }

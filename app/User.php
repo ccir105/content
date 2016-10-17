@@ -17,6 +17,7 @@ class User extends Authenticatable
             'name', 'email', 'password','mixing','background'
         ];
     }
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -33,9 +34,9 @@ class User extends Authenticatable
         4 => '1'
     ];
 
-    // public function setPasswordAttribute($value){
-    //     $this->attributes['password'] = \Hash::make($value);
-    // }
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = \Hash::make($value);
+    }
 
     public function myAdvice($type = null){
         $query = $this

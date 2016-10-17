@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIsPendingFiled extends Migration
+class AddColorFiledInAdviceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddIsPendingFiled extends Migration
      */
     public function up()
     {
-        Schema::table('advice_user', function (Blueprint $table) {
-            $table->boolean('is_pending')->default('1')->index();
+        Schema::table('advices', function (Blueprint $table) {
+            $table->string('color')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ class AddIsPendingFiled extends Migration
      */
     public function down()
     {
-        Schema::table('advice_user', function (Blueprint $table) {
+        Schema::table('advices', function (Blueprint $table) {
             //
         });
     }

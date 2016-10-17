@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Facade\ResponseHelper;
 use Illuminate\Support\ServiceProvider;
+use App\Advice;
+use App\Elastic\Advice as ElasticAdvice;
+use App\Repositories\AdviceRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('responseHelper',function(){
             return new ResponseHelper();
         });
+
+        $this->app->bind('AdviceRepo', function(){
+            return new AdviceRepository(new ElasticAdvice, new Advice);
+        });
     }
 }
+    

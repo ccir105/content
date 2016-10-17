@@ -24,9 +24,8 @@ class AddNewAdvice extends Request
     public function rules()
     {
         return [
-            'text' => 'required|max:100',
-            'isGlobal' => 'required',
-            'priority' => 'required'
+            'content' => 'required',
+            'priority' => 'required|in:'.implode(',',range(1,4))
         ];
     }
 }

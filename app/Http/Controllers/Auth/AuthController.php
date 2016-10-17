@@ -72,7 +72,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
         ]);
 
         $token = $this->jwt->fromUser($user, [
@@ -129,6 +129,4 @@ class AuthController extends Controller
         }
         return Res::fail($validator->getMessageBag()->toArray(),'Validation Error',UNPROCESSED_ENTITY);
     }
-
-//        public function pos
 }

@@ -148,6 +148,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider::class,
         /*
          * Application Service Providers...
          */

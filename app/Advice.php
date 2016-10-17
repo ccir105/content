@@ -4,34 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Pivot\UserAdvicePivot;
+
 class Advice extends Model
 {
     protected $table = "advices";
 
-    protected $fillable = ['text'];
+    protected $fillable = ['content','priority','time','color'];
     
     public function owner()
     {
     	return $this->belongsTo('App\User','user_id','id');
     }
 
-    public function isGlobal()
+    public static function setUserId($userId)
     {
-    	return $this->type == '1';
-    }
-
-    public function scopeGlobals($query)
-    {
-    	return $query->where('type','1');
-    }
-    
-    public function users()
-    {
-    	return $this->belongsToMany('App\User','advice_user','advice_id','user_id');
-    }
-
-    public function newPivot(Model $parent, array $attributes, $table, $exists)
-    {
-        return new UserAdvicePivot($parent, $attributes, $table, $exists);
+        $instance = new static();
+        $instance->user_id = $userId;
+        return $instance;
     }
 }

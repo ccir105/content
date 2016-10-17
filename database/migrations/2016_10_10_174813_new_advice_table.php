@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAdviceUserTable extends Migration
+class NewAdviceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class AddAdviceUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('advice_user', function( Blueprint $table ){
+        Schema::create('advices', function ( Blueprint $table ) {
             $table->increments('id');
+            $table->string('content');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('advice_id')->unsigned();
-            $table->foreign('advice_id')->references('id')->on('advices')->onDelete('cascade');
-            $table->tinyInteger('priority')->index();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->tinyInteger('priority')->default(1);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class AddAdviceUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('advices');
     }
 }

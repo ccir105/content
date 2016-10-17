@@ -21,9 +21,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Advice::class, function( Faker\Generator $faker ){
+ 
+  $priorities = range(1,4);
+  
+  $pr = array_rand($priorities);
+
    return [
-       'text' => $faker->sentence,
-       'type' => 0,
-       'user_id' => 1
+       'content' => $faker->sentence,
+       'priority' => $priorities[$pr],
+       'user_id' => 4,
+       'color' => 'md-red-300-bg'
    ];
 });

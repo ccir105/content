@@ -21,7 +21,8 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function(){
+Route::group(['middleware' => ['web']], function()
+{
 	Route::controllers([
 		'password' => 'Auth\PasswordController'
 	]);
@@ -29,11 +30,19 @@ Route::group(['middleware' => ['web']], function(){
 	Route::post('reset/login', 'MainController@loginAfterReset');
 });
 
-Route::group(['middleware' => ['api']], function () {
-
+Route::group(['middleware' => ['api']], function ()
+{
 	Route::controllers([
 		'auth' => 'Auth\AuthController',
 	]);
+	
+	Route::get('advice', 'AdviceController@get');
+
+	Route::get('advice/grouped','AdviceController@getByPriority');
+
+	Route::post('advice/{advice?}','AdviceController@save');
+
+	Route::delete('advice/{advice}','AdviceController@delete');
 
 	Route::post('email/unique','MainController@isUniqueEmail');
 
@@ -47,23 +56,31 @@ Route::group(['middleware' => ['api']], function () {
 			return Res::fail([],'Failed');
 		});
 
-		Route::post('advice', 'MainController@saveAdvice');
+		// // Route::post('advice', 'MainController@saveAdvice');
 
-		Route::get('advice','MainController@myAdvice');
+		// Route::get('advice','MainController@myAdvice');
 
-		Route::get('global','MainController@globalAdvice');
+		// Route::get('global','MainController@globalAdvice');
 
-		Route::get('me/advices','MainController@myAdviceByPrority');
+		// Route::get('me/advices','MainController@myAdviceByPrority');
 
-		Route::post('global/{global}','MainController@addToMyAdvice');
+		// Route::post('global/{global}','MainController@addToMyAdvice');
 
-		Route::post('settings/{settingKey}','MainController@changeUserSettings');
+		// Route::post('settings/{settingKey}','MainController@changeUserSettings');
 
-		Route::post('update/{advice}/pending','MainController@updatePending');
+		// Route::post('update/{advice}/pending','MainController@updatePending');
+
+
+
+		/**
+		 * New Advice For personal
+		 */
+
 	});
 });
 
-Route::bind('advice', function($id){
+Route::bind('advice', function($id)
+{
 	if($advice = App\Advice::find($id)){
 		return $advice;
 	}
@@ -72,16 +89,6 @@ Route::bind('advice', function($id){
 	}
 });
 
-Route::bind('global',function($adviceId){
-	if($advice = App\Advice::where('type',1)->where('id',$adviceId)->first())
-	{
-		return $advice;
-	}
-	else
-	{
-		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
-	}
-});
 
 Route::bind('settingKey', function($value)
 {
