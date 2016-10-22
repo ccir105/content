@@ -17,6 +17,7 @@ use App\Http\Requests\LoginAfterResetRequest;
 use Session;
 use Tymon\JWTAuth\JWTAuth;
 use App\Events\GlobalAdviceNotifier;
+use DB;
 
 class MainController extends Controller
 {   
@@ -29,7 +30,13 @@ class MainController extends Controller
 
     public function isUniqueEmail(UniqueEmailRequest $request)
     {
-   		return Res::success(['exists' => true]);	
+   		return Res::success( ['exists' => User::whereEmail( $request->get('email') ) ->first() ||  false ] );	
+    }
+
+    public function validateResetToken(Request $request)
+    {
+        $token = DB::table('password_resets')->where('token', $request->get('token'))->whereEmail($request->get('email'))->first();
+        return $token ? Res::success([]) : Res::fail([],'The reset token is malformed');
     }
 
     public function saveAdvice(AddNewAdvice $request)

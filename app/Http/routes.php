@@ -27,6 +27,8 @@ Route::group(['middleware' => ['web']], function()
 		'password' => 'Auth\PasswordController'
 	]);
 
+	Route::post('reset/validate', 'MainController@validateResetToken');
+
 	Route::post('reset/login', 'MainController@loginAfterReset');
 });
 
@@ -36,13 +38,6 @@ Route::group(['middleware' => ['api']], function ()
 		'auth' => 'Auth\AuthController',
 	]);
 	
-	Route::get('advice', 'AdviceController@get');
-
-	Route::get('advice/grouped','AdviceController@getByPriority');
-
-	Route::post('advice/{advice?}','AdviceController@save');
-
-	Route::delete('advice/{advice}','AdviceController@delete');
 
 	Route::post('email/unique','MainController@isUniqueEmail');
 
@@ -55,6 +50,16 @@ Route::group(['middleware' => ['api']], function ()
 			}
 			return Res::fail([],'Failed');
 		});
+		
+		Route::get('advice', 'AdviceController@get');
+
+		Route::get('advice/grouped','AdviceController@getByPriority');
+
+		Route::post('advice/{advice?}','AdviceController@save');
+
+		Route::delete('advice/{advice}','AdviceController@delete');
+
+		Route::post('me/{settingKey}/update','HomeController@updateMe');
 
 		// // Route::post('advice', 'MainController@saveAdvice');
 
@@ -81,7 +86,8 @@ Route::group(['middleware' => ['api']], function ()
 
 Route::bind('advice', function($id)
 {
-	if($advice = App\Advice::find($id)){
+	if($advice = App\Advice::find($id))
+	{
 		return $advice;
 	}
 	else{
@@ -92,7 +98,7 @@ Route::bind('advice', function($id)
 
 Route::bind('settingKey', function($value)
 {
-	if( preg_match('/^' .implode('|', App\User::getFillables() ) . '$/', $value))
+	if( in_array( $value, App\User::getFillables() ) )
 	{
 		return $value;
 	}

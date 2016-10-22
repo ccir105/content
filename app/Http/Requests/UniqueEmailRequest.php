@@ -24,12 +24,8 @@ class UniqueEmailRequest extends Request
      */
     public function rules()
     {
-        Validator::extend('not_unique_email',function($attr, $value, $parameter, $validator){
-            return is_null(User::where('email',$value)->first()) ? false : true;
-        },'This email is not registered yet');
-
         return [
-            'email' => 'required|email|max:255|not_unique_email'
+            'email' => 'required|email|max:255'
         ];
     }
 }

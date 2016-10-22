@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Res;
 use App\User;
+use Tymon\JWTAuth\JWTAuth;
 use App\Events\ResetSuccessEvent;
 use Session;
 class PasswordController extends Controller
@@ -27,13 +28,16 @@ class PasswordController extends Controller
     protected $tokens;
 
     protected $request;
+
+    protected $jwt;
     /**
      * Create a new password controller instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, JWTAuth $jwt)
     {
+        $this->jwt = $jwt;
         $this->request = $request;
     }
 
@@ -50,20 +54,14 @@ class PasswordController extends Controller
 
     protected function getResetSuccessResponse($response)
     {
-        $channelId = md5( $this->request->get('token') );
+        $user = User::whereEmail( $this->request->get('email') )->first();
 
-        $email = $this->request->get('email');
+        $token = $this->jwt->fromUser($user, [
+            'name' => $user->name,
+            'email' => $user->email,
+            'user_id' => $user->id
+        ]);
 
-        $sessionSecret = md5( $email . $channelId . time() );
-
-        Session::put('secret_token', $sessionSecret );
-
-        $time = encrypt( time() );
-
-        $email = encrypt( $email );
-
-        event( new ResetSuccessEvent( $channelId , ['data' => $email, 'reset' => true, 'hash' => $time , 'secret' => $sessionSecret ] ) );
-        
-        return view('auth.passwords.success');
+        return Res::success(['token' => $token]);
     }
 }

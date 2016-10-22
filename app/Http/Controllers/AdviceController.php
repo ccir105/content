@@ -15,16 +15,23 @@ class AdviceController extends Controller
 
     public $user;
 
-	public function __construct()
-	{
-		$this->repo = app('AdviceRepo');
-
+	public function __construct(Request $request)
+    {
         $this->user = Auth::user();
-	}
+
+        if( $request->route('advice') && Auth::user()->id != $request->route('advice')->user_id )
+        {
+            return Res::fail([],'This resource doesn\'t belongs to you');
+        }
+
+        $this->repo = app('AdviceRepo');
+
+    }
 
     public function save( AddNewAdvice $request, $advice = null )
     {        
-        $eqAdvice = is_null( $advice ) ? Advice::setUserId(4) : null;
+
+        $eqAdvice = is_null( $advice ) ? Advice::setUserId($this->user->id) : null;
 
     	$this->repo->setEloquent($eqAdvice);
 
@@ -38,12 +45,13 @@ class AdviceController extends Controller
 
     public function get()
     {
-      $data = $this->repo->paginate(20)->toArray();
+      $data = $this->repo->paginate($this->user->id , 20)->toArray();
       return $data['data'];
     }
 
     public function getByPriority()
     {
-        return $this->repo->getGroupedByPriority(4);
+        $advices = $this->repo->getGroupedByPriority($this->user->id);
+        return count($advices) == 0 ? '{}' : $advices;
     }
 }

@@ -55,9 +55,9 @@ class AdviceRepository
 		return $this->elastic->find($id);
 	}
 
-	public function paginate($total)
+	public function paginate($userId, $total)
 	{
-		return $this->elastic->sort(['created_at' => 'desc'])->where('user_id',4)->paginate(10);
+		return $this->elastic->sort(['created_at' => 'desc'])->where('user_id',$userId)->paginate(10);
 	}
 
 	public function getGroupedByPriority( $userId )
