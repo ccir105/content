@@ -6,7 +6,8 @@ use App\Facade\ResponseHelper;
 use Illuminate\Support\ServiceProvider;
 use App\Advice;
 use App\Elastic\Advice as ElasticAdvice;
-use App\Repositories\AdviceRepository;
+use App\Repositories\Elastic\AdviceRepository;
+use App\Repositories\Eloquent\PageRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('AdviceRepo', function(){
             return new AdviceRepository(new ElasticAdvice, new Advice);
+        });
+
+        $this->app->bind('PageRepo', function(){
+            return new PageRepository();
         });
     }
 }

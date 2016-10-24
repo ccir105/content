@@ -61,26 +61,11 @@ Route::group(['middleware' => ['api']], function ()
 
 		Route::post('me/{settingKey}/update','HomeController@updateMe');
 
-		// // Route::post('advice', 'MainController@saveAdvice');
+		Route::get('page', 'PageController@getMine');
 
-		// Route::get('advice','MainController@myAdvice');
+		Route::delete('page/{page}','PageController@remove');
 
-		// Route::get('global','MainController@globalAdvice');
-
-		// Route::get('me/advices','MainController@myAdviceByPrority');
-
-		// Route::post('global/{global}','MainController@addToMyAdvice');
-
-		// Route::post('settings/{settingKey}','MainController@changeUserSettings');
-
-		// Route::post('update/{advice}/pending','MainController@updatePending');
-
-
-
-		/**
-		 * New Advice For personal
-		 */
-
+		Route::post('page/{page?}','PageController@save');
 	});
 });
 
@@ -94,6 +79,21 @@ Route::bind('advice', function($id)
 		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
 	}
 });
+
+Route::bind('page',function($id)
+{
+	$repo = app('PageRepo');
+
+	if( $page = $repo->find( $id ) )
+	{
+		return $page;
+	}
+	else
+	{
+		throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+	}
+});
+
 
 
 Route::bind('settingKey', function($value)

@@ -1,5 +1,6 @@
 <?php namespace App\Facade;
-
+use Log;
+use Illuminate\Http\Request;
 /**
  * Created by PhpStorm.
  * User: sishir
@@ -14,16 +15,32 @@ class ResponseHelper
     const NOT_FOUND = 404;
 
     private $status;
+    
     private $data;
+    
     private $message;
+
     private $statusCode;
 
+    public $request;
 
-    public function fail( $data = [], $message = "", $statusCode = self::FAIL){
+    public function __construct()
+    {
+        $this->request = app(Request::class);
+    }
+
+    public function fail( $data = [], $message = "", $statusCode = self::FAIL)
+    {    
         $this->status = 'fail';
+        
         $this->data = $data;
+        
         $this->message = $message;
+
+        Log::warning($this->message .'=::='. $this->request );
+        
         $this->statusCode = $statusCode;
+        
         return $this->send();
     }
 

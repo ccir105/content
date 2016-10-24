@@ -15,4 +15,6 @@ class Advice extends Model
     public $time;
 
     public $color;
+
+    public $page_id;
 }

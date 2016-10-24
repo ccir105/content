@@ -1,4 +1,4 @@
-<?php namespace App\Repositories\Elastic;
+<?php namespace App\Repositories;
 
 class AdviceRepository
 {
