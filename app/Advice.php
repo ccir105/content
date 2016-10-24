@@ -9,7 +9,7 @@ class Advice extends Model
 {
     protected $table = "advices";
 
-    protected $fillable = ['content','priority','time','color'];
+    protected $fillable = ['content','priority','time','color','page_id'];
     
     public function owner()
     {
