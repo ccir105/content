@@ -34,9 +34,9 @@ class User extends Authenticatable
         4 => '1'
     ];
 
-    public function setPasswordAttribute($value){
-        $this->attributes['password'] = \Hash::make($value);
-    }
+    // public function setPasswordAttribute($value){
+    //     // $this->attributes['password'] = \Hash::make($value);
+    // }
 
     public static function getResetToken($email)
     {
