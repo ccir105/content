@@ -48,16 +48,16 @@ class AdviceRepository
 
 			return $advice->delete();
 		}
-	}
+	} 
 
 	public function findElastic($id)
 	{
 		return $this->elastic->find($id);
 	}
 
-	public function paginate($userId, $total)
+	public function paginate($userId, $total, $page)
 	{
-		return $this->elastic->sort(['created_at' => 'desc'])->where('user_id',$userId)->paginate(10);
+		return $this->elastic->sort(['created_at' => 'desc'])->where('user_id',$userId)->paginate(10, $page);
 	}
 
 	public function getGroupedByPriority( $userId )

@@ -15,8 +15,13 @@ class AdviceController extends Controller
 
     public $user;
 
+    public $page;
+
 	public function __construct(Request $request)
     {
+
+        $this->page = $request->has('page') ?  $request->get('page') : 0;
+
         $this->user = Auth::user();
 
         if( $request->route('advice') && Auth::user()->id != $request->route('advice')->user_id )
@@ -45,7 +50,7 @@ class AdviceController extends Controller
 
     public function get()
     {
-      $data = $this->repo->paginate($this->user->id , 20)->toArray();
+      $data = $this->repo->paginate($this->user->id , 20, $this->page)->toArray();
       return $data['data'];
     }
 

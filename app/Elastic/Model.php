@@ -91,10 +91,8 @@ class Model extends ElasticsearchModel
     }
 
 
-    public static function paginate($perPage)
+    public static function paginate($perPage, $currentPage = 0)
     {
-        $currentPage = Paginator::resolveCurrentPage();
-
         $query = self::makeQueryInstance()->build();
 
         $query['size'] = $perPage;
