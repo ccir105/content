@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 //*/
-Auth::loginUsingId(App\User::find(1)->id); //admin
+// Auth::loginUsingId(App\User::find(1)->id); //admin
 //Auth::loginUsingId(App\User::find(6)->id); //developer
 //Auth::loginUsingId(App\User::find(20)->id); //client
 //Auth::loginUsingId(App\User::find(19)->id); //manager

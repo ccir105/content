@@ -127,6 +127,4 @@ class AuthController extends Controller
         }
         return Res::fail($validator->getMessageBag()->toArray(),'Validation Error',UNPROCESSED_ENTITY);
     }
-
-//        public function pos
 }

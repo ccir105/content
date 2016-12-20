@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['api'/*,'jwt.auth','my.auth'*/], 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
+Route::group(['middleware' => ['api','jwt.auth','my.auth'], 'prefix' => 'api', 'namespace' => 'Modules\Project\Http\Controllers'], function()
 {
 	/**
 	 * Normal Auth Request
