@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "pingpong/modules": "~2.0",
         "zizaco/entrust": "^1.5",
-        "tymon/jwt-auth": "^0.5.9"
+        "tymon/jwt-auth": "^0.5.9",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
